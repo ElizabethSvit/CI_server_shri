@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html style="height: 100%" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Start screen</title>
+    <link rel="stylesheet" href="../blocks/header/header.css">
+    <link rel="stylesheet" href="./placeholder/placeholder.css">
+    <link rel="stylesheet" href="../blocks/footer/footer.css">
+</head>
+
+<!--TODO: убрать эти стили в отдельный файл-->
+<body style="display: flex; flex-direction: column; height: 100%; margin: 0;">
+    <div class="header">
+        <p class="header__title">School CI server</p>
+        <button class="button">
+            <img src="../images/settings-icon.svg" class="header__settings-icon">
+            <p class="header__settings-btn-text">Settings</p>
+        </button>
+    </div>
+    <div class="placeholder">
+        <img src="../images/instruments.svg" class="placeholder__icon">
+        <p class="placeholder__text">Configure repository connection and synchronization settings</p>
+        <button class="placeholder__btn placeholder__btn-text">
+            Open settings
+        </button>
+    </div>
+    <div class="footer">
+        <div class="footer__btn-block">
+            <button class="footer__text-btn">Support</button>
+            <button class="footer__text-btn footer__learning-text footer__learning-text_active">Learning</button>
+        </div>
+        <p class="footer__text-rights">© 2020 Liza Svitanko</p>
+    </div>
+</body>
+</html>

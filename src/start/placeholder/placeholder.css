@@ -1,0 +1,41 @@
+@font-face {
+    font-family: "YS Text";
+    src: url("//yastatic.net/islands/_/6Roy0LCd05cK4nNCipgzheYcNVU.woff2") format("woff2"), url("//yastatic.net/islands/_/KtHQR1erf3spayoIM4M4ngg0e2E.woff") format("woff");
+    font-weight: 100;
+    font-style: normal;
+    font-size: 13px;
+}
+
+.placeholder {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.placeholder__icon {
+    width: 124px;
+    height: 124px;
+}
+
+.placeholder__text {
+    width: 264px;
+    text-align: center;
+    font-family: "YS Text", serif;
+}
+
+.placeholder__btn {
+    background: #FFCC00;
+    border-radius: 4px;
+    border: none;
+    width: 123px;
+    height: 36px;
+    font-size: 13px;
+    line-height: 36px;
+}
+
+.placeholder__btn-text {
+    text-align: center;
+    font-family: "YS Text", serif;
+}

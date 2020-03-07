@@ -1,0 +1,61 @@
+@font-face {
+    font-family: "YS Text";
+    src: url("//yastatic.net/islands/_/PyVcRbwHetz0gOVWLonWH7Od8zM.woff2") format("woff2"), url("//yastatic.net/islands/_/bIx8jOfCEfR-mECoDUEZywDBuHA.woff") format("woff");
+    font-weight: 400;
+    font-style: normal;
+}
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+    padding: 8px 200px;
+    background-color: #F0F2F3;
+    align-items: center;
+
+    font-family: "YS Text", serif;
+    font-size: 13px;
+    line-height: 16px;
+    color: #7F8285;
+    font-weight: normal;
+}
+
+.footer__learning-text {
+    margin-left: 12px;
+}
+
+.footer__btn-block {
+    display: flex;
+}
+
+.footer__text-btn {
+    border: none;
+    background-color: transparent;
+    padding: 0;
+
+    font-family: "YS Text", serif;
+    font-size: 13px;
+    line-height: 16px;
+    color: #7F8285;
+}
+
+/*TODO: сделать красный на hover*/
+.footer__text-btn:hover {
+    color: #E00000;
+}
+
+.footer__text-rights {
+    margin: 0;
+}
+
+@media only screen and (max-width: 320px) {
+    .footer__btn-block {
+        margin-bottom: 8px;
+    }
+
+    .footer {
+        padding: 12px 16px;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
