@@ -1,7 +1,7 @@
 @font-face {
     font-family: "YS Text";
     src: url("//yastatic.net/islands/_/6Roy0LCd05cK4nNCipgzheYcNVU.woff2") format("woff2"), url("//yastatic.net/islands/_/KtHQR1erf3spayoIM4M4ngg0e2E.woff") format("woff");
-    font-weight: 100;
+    font-weight: normal;
     font-style: normal;
     font-size: 13px;
 }
@@ -20,7 +20,10 @@
 }
 
 .placeholder__text {
-    width: 264px;
+    width: 250px;
+    margin-bottom: 24px;
+    margin-top: 32px;
+
     text-align: center;
     font-family: "YS Text", serif;
 }
@@ -38,4 +41,11 @@
 .placeholder__btn-text {
     text-align: center;
     font-family: "YS Text", serif;
+}
+
+@media only screen and (max-width: 320px) {
+    .placeholder__text {
+        line-height: 125%;
+        margin: 32px 16px 24px 16px;
+    }
 }

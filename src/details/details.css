@@ -1,0 +1,93 @@
+.ticket {
+    margin-bottom: 12px;
+}
+
+.ticket__content_placeholder {
+    width: 100%;
+}
+
+/*.ticket__time-info_calendar {*/
+    /*margin-bottom: 12px;*/
+/*}*/
+
+.ticket__time-info {
+    display: flex;
+    position: relative;
+    margin-left: 20px;
+    margin-bottom: 0;
+
+    align-items: center;
+    font-size: 13px;
+    line-height: 16px;
+}
+
+.ticket__time-info_calendar {
+    margin-right: 0;
+}
+
+.ticket__time-info_timer {
+    margin-left: 28px;
+}
+
+.ticket__time-info:before {
+    content: '';
+    height: 16px;
+    width: 14px;
+    position: absolute;
+    opacity: 0.3;
+}
+
+.ticket__time-info_calendar:before {
+    left: -20px;
+    background: url("../images/calendar-icon.svg") no-repeat center center;
+}
+
+.ticket__time-info_timer:before {
+    left: -18px;
+    background: url("../images/timer-icon.svg") no-repeat center center;
+}
+
+.ticket__time-details {
+    margin-top: 8px;
+    display: flex;
+}
+
+hr {
+    background: #F0F2F3;
+    width: 100%;
+    border-color: transparent;
+    display: block;
+}
+
+p {
+    margin: 0;
+}
+
+.show-more-button {
+    align-self: start;
+    padding: 0 13px 0 13px;
+    margin: 0;
+}
+
+.big-log {
+    background: #F2F2F2;
+    border-radius: 6px;
+
+    padding: 8px 233px 8px 12px;
+    margin: 0px 5% 8px 5%;
+    min-width: 824px;
+}
+
+.big-log__text {
+    font-family: Hack, serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 10px;
+    line-height: 20px;
+}
+
+@media only screen and (max-width: 320px) {
+    .big-log {
+        margin: 0;
+    }
+}

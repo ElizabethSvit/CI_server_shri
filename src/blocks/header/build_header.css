@@ -1,4 +1,3 @@
-/*TODO: добавить media queries */
 @font-face {
     font-family: "YS Text";
     src: url("//yastatic.net/islands/_/7_GKBdKFbUPzKlghJRv55xgz0FQ.woff2") format("woff2"), url("//yastatic.net/islands/_/SmqPmIMEXrW4lOY8QrhTUVDbrro.woff") format("woff");
@@ -9,9 +8,9 @@
 .header {
     display: flex;
     justify-content: space-between;
-    width: 80%;
-    padding: 10px 0;
+    width: 90%;
     height: 28px;
+    margin-top: 10px;
 }
 
 /*TODO: добавить стили для нажатой кнопки*/
@@ -70,4 +69,16 @@
     .header__settings-btn-text {
         display: none;
     }
+
+    .header__build-btn-text {
+        display: none;
+    }
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    margin: 0;
 }
