@@ -179,7 +179,7 @@ hr {
     margin: 0;
 }
 
-@media only screen and (max-width: 320px) {
+@media only screen and (max-width: 824px) {
     .ticket__details {
         flex-direction: column;
     }

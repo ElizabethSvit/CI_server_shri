@@ -43,7 +43,7 @@
     font-family: "YS Text", serif;
 }
 
-@media only screen and (max-width: 320px) {
+@media only screen and (max-width: 824px) {
     .placeholder__text {
         line-height: 125%;
         margin: 32px 16px 24px 16px;
