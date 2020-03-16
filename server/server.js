@@ -1,10 +1,12 @@
 const express = require('express');
 const axios = require('axios');
 const https = require('https');
-const { spawn } = require('child_process');
+const {spawn, exec} = require('child_process');
 
 const app = express();
 app.use(express.json());
+
+const DEFAULT_REPO_DIR = './testRepo';
 
 let settings = {
     repoName: "",
@@ -27,12 +29,14 @@ class Build {
     }
 }
 
-const makeCommitData = (data) => {
-    let request = data.toString().split('\n');
-    for (let field of request) {
-        // TODO: parse fields
-        console.log(field.split(':'));
-    }
+const parseCommitData = (data, commitHash) => {
+    data = data.toString().split('\t');
+    let request = {};
+    request.authorName = data[0];
+    request.commitMessage = data[1];
+    request.branchName = data[2].split(',')[0];
+    request.commitHash = commitHash;
+
     return request;
 };
 
@@ -51,7 +55,7 @@ const api = axios.create({
 // получение сохраненных настроек
 app.get('/settings', (req, res) => {
         try {
-            api.get('/conf', {}).then(({ data }) => {
+            api.get('/conf', {}).then(({data}) => {
                 const {repoName, buildCommand, mainBranch, period} = data;
                 settings = {repoName, buildCommand, mainBranch, period};
             });
@@ -65,11 +69,20 @@ app.get('/settings', (req, res) => {
 
 //  cохранение настроек
 app.post('/settings', (req, res) => {
-    // TODO: clone repo here
     const conf = req.body;
-    console.log('CONF', conf);
+
     try {
-        api.post('/conf', conf).then(({ data }) => console.log(data));
+        try {
+            spawn('git', ['clone', conf.repoName, DEFAULT_REPO_DIR]).stdout.on('data', data => {
+                console.log('Repo cloned')
+            });
+            res.end('Success');
+        } catch (e) {
+            console.log(e);
+            res.end('Error');
+        }
+
+        api.post('/conf', conf).then(({data}) => console.log(data));
         res.end('Success');
     } catch (e) {
         console.log(e);
@@ -80,7 +93,7 @@ app.post('/settings', (req, res) => {
 // получение списка сборок
 app.get('/builds', (req, res) => {
     try {
-        api.get('/build/list', { params: { offset: 0, limit: 50 } }).then(({ data }) => console.log(data));
+        api.get('/build/list', {params: {offset: 0, limit: 50}}).then(({data}) => console.log(data));
         res.end('Success');
     } catch (e) {
         console.log(e);
@@ -93,17 +106,28 @@ app.post('/builds', (req, res) => {
     const commitHash = req.body.commitHash;
 
     try {
-        spawn('git', ['log', '-1', '--format=fuller', commitHash]).stdout.on('data', data => {
-            const commitData = makeCommitData(data);
-            // эта очередь будет с логикой в дз по инфраструктуре
-            buildsQueue.push(commitData);
+        exec('git -C testRepo/ log -1 --pretty=format:"%an\t%s\t%D" 5292cdf7407b9e25f3d72da83c9cd275a237b0a0\n',
+            function (error, stdout, stderr) {
+                const commitData = parseCommitData(stdout, commitHash);
+                console.log('Got commit data by hash', commitData);
+                // эта очередь будет с логикой в дз по инфраструктуре
+                buildsQueue.push(commitData);
+            }
+        );
 
-            // TODO: в какой-то момент вызывать start/finish
-            // api.post('/build/request', requestData).then(({ data }) => {
-            //   // get buildId
-            //   console.log(data);
-            // });
+        // предположительно, здесь приходит buildId для последующей отправки на сборку
+        api.post('/build/request', buildsQueue.shift())
+            .then(buildId => {
+                api.post('/build/start', buildId);
+                return buildId;
+            }).then(buildId => {
+                setTimeout(() => {
+                    api.post('/build/finish', buildId)
+                }, 3000);
+            })
+            .catch(() => {
         });
+
         res.end('Success');
     } catch (e) {
         console.log(e);
@@ -115,7 +139,7 @@ app.post('/builds', (req, res) => {
 app.get('/builds', (req, res) => {
     const buildId = req.body.buildId;
     try {
-        api.get('/build/details', { params: { buildId  } }).then(({ data }) => console.log(data));
+        api.get('/build/details', {params: {buildId}}).then(({data}) => console.log(data));
         res.end('Success');
     } catch (e) {
         console.log(e);
@@ -127,7 +151,7 @@ app.get('/builds', (req, res) => {
 app.get('/builds/logs', (req, res) => {
     const buildId = req.body.buildId;
     try {
-        api.get('/build/logs', { params: { buildId  } }).then(({ data }) => console.log(data));
+        api.get('/build/logs', {params: {buildId}}).then(({data}) => console.log(data));
         res.end('Success');
     } catch (e) {
         console.log(e);
@@ -140,6 +164,7 @@ app.listen(3000);
 /*
 Testing with curl
 
-curl -X POST "http://localhost:3000/builds" -H "Content-Type: application/json" -d "{\"commitHash\":\"1c0886e12dd06ff846207675b609746f870e89a9\"}"
+curl -X POST "http://localhost:3000/settings" -H "Content-Type: application/json" -d "{\"repoName\":\"git@github.com:ElizabethSvit/shri-async-hw.git\"}"
+curl -X POST "http://localhost:3000/builds" -H "Content-Type: application/json" -d "{\"commitHash\":\"fe9d127781ad8870631f8c2defffc5a61d0fe44d\"}"
 curl http://localhost:3000/builds
 * */
