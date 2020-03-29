@@ -1,0 +1,54 @@
+@import "../constants.css";
+@import "../../fonts/fonts.css";
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 10%;
+    background-color: var(--color-background);
+    align-items: center;
+
+    font-family: "YS Text", serif;
+    font-size: 13px;
+    line-height: 16px;
+    color: var(--color-text-additional);
+    font-weight: normal;
+}
+
+.footer__learning-text {
+    margin-left: 12px;
+}
+
+.footer__btn-block {
+    display: flex;
+}
+
+.footer__text-btn {
+    border: none;
+    background-color: transparent;
+    padding: 0;
+
+    font-size: 13px;
+    line-height: 16px;
+    color: #7F8285;
+}
+
+.footer__text-btn:hover {
+    color: var(--color-footer-btn-hovered);
+}
+
+.footer__text-rights {
+    margin: 0;
+}
+
+@media only screen and (max-width: 824px) {
+    .footer__btn-block {
+        margin-bottom: 8px;
+    }
+
+    .footer {
+        padding: 15px 5%;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

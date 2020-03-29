@@ -1,0 +1,45 @@
+@import "../fonts/fonts.css";
+
+.placeholder {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.placeholder__icon {
+    width: 124px;
+    height: 124px;
+}
+
+.placeholder__text {
+    width: 250px;
+    margin-bottom: 24px;
+    margin-top: 32px;
+
+    text-align: center;
+    font-family: "YS Text", serif;
+}
+
+.placeholder__btn {
+    background: var(--color-save-btn-enabled);
+    border-radius: 4px;
+    border: none;
+    width: 123px;
+    height: 36px;
+    font-size: 13px;
+    line-height: 36px;
+}
+
+.placeholder__btn-text {
+    text-align: center;
+    font-family: "YS Text", serif;
+}
+
+@media only screen and (max-width: 824px) {
+    .placeholder__text {
+        line-height: 125%;
+        margin: 32px 16px 24px 16px;
+    }
+}

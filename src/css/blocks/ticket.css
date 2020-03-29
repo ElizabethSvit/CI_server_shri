@@ -1,0 +1,232 @@
+@import "../constants.css";
+@import "../../fonts/fonts.css";
+
+.placeholder {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 10px 10%;
+}
+
+.ticket {
+    box-sizing: border-box;
+    display: flex;
+    align-items: flex-start;
+    padding: 12px 24px 12px 3%;
+    margin: 0 0 8px 0;
+
+    font-family: "YS Text", serif;
+
+    box-shadow: 0px 1px 1px var(--box-shadow), 0px 0px 1px var(--box-shadow);
+    border-radius: 6px;
+
+}
+
+.ticket:hover {
+    box-shadow: 0px 2px 8px var(--box-shadow), 0px 0px 1px var(--box-shadow);
+}
+
+.ticket__content {
+    display: flex;
+    justify-content: space-between;
+
+    width: 100%;
+    margin-left: 30px;
+}
+
+.ticket__title {
+    position: relative;
+    display: flex;
+    margin-bottom: 0;
+
+    line-height: 20px;
+    font-size: 15px;
+}
+
+.ticket__title:before {
+    content: '';
+    width: 22px;
+    height: 23px;
+    position: absolute;
+    left: -30px;
+}
+
+.ticket__title_accepted:before {
+    background: url("../../images/accepted-icon.svg") no-repeat center 1px;
+}
+
+.ticket__title_await:before {
+    background: url("../../images/await-icon.svg") no-repeat center 1px;
+}
+
+.ticket__title_rejected:before {
+    background: url("../../images/rejected-icon.svg") no-repeat center 1px;
+}
+
+.ticket__number {
+    margin: 0 4px 0 0;
+
+    font-size: 18px;
+    line-height: 20px;
+}
+
+.ticket__number_accepted {
+    color: var(--color-accept);
+}
+
+.ticket__number_await {
+    color: var(--color-await);
+}
+
+.ticket__number_rejected {
+    color: var(--color-reject);
+}
+
+.ticket__name {
+    margin: 0;
+}
+
+.ticket__details {
+    list-style: none;
+    margin-bottom: 0;
+    margin-right: 10px;
+    padding: 0;
+
+    display: flex;
+
+    font-size: 13px;
+    line-height: 16px;
+}
+
+.ticket__info-text {
+    margin-left: 4px;
+    font-size: 13px;
+    line-height: 16px;
+    letter-spacing: 0.06px;
+    position: relative;
+}
+
+.ticket__info-text-username {
+    margin-left: 20px;
+}
+
+.ticket__info-text-username:before {
+    content: '';
+    width: 13px;
+    height: 14px;
+    background: url("../../images/user-icon.svg") no-repeat center center;
+    position: absolute;
+    left: -18px;
+    opacity: var(--opacity-info-text);
+}
+
+.ticket__info-text-master {
+    margin-left: 20px;
+}
+
+.ticket__info-text-master:before {
+    content: '';
+    width: 16px;
+    height: 16px;
+    background: url("../../images/commit-icon.svg") no-repeat center center;
+    position: absolute;
+    left: -20px;
+    opacity: var(--opacity-info-text);
+}
+
+.ticket__info-text_index {
+    opacity: var(--opacity-info-text-index);
+}
+
+.ticket__time-icon {
+    margin-right: 5px;
+    opacity: var(--opacity-ticket-time-icon);
+}
+
+.ticket__time-info {
+    display: flex;
+
+    align-items: center;
+    font-size: 13px;
+    line-height: 16px;
+    opacity: var(--opacity-time-info);
+}
+
+hr {
+    display: none;
+    background: var(--color-background);
+    width: 100%;
+    border-color: transparent;
+}
+
+.show-more-button {
+    align-self: start;
+    padding: 0 13px 0 13px;
+    margin: 0;
+}
+
+@media only screen and (max-width: 824px) {
+    .placeholder {
+        padding: 10px 5%;
+    }
+
+    .ticket__details {
+        flex-direction: column;
+    }
+
+    .ticket__details_branch {
+        width: 100%;
+        flex-direction: row;
+    }
+
+    .ticket__content {
+        flex-direction: column;
+    }
+
+    .ticket__title {
+        flex-direction: column;
+    }
+
+    .ticket__number {
+        margin: 0 4px 0 0;
+
+        font-size: 16px;
+        line-height: 16px;
+    }
+
+    .ticket__title:before {
+        width: 15px;
+        height: 16px;
+        left: -23px;
+    }
+
+    .ticket__title_accepted:before {
+        background: url("../../images/accepted-icon-small.svg") no-repeat center 1px;
+    }
+
+    .ticket__title_await:before {
+        background: url("../../images/await-icon-small.svg") no-repeat center 1px;
+    }
+
+    .ticket__title_rejected:before {
+        background: url("../../images/rejected-icon-small.svg") no-repeat center 1px;
+    }
+
+    .ticket__time-details {
+        display: flex;
+    }
+
+    .ticket__time-info_calendar {
+        margin-bottom: 0;
+        margin-right: 10px;
+    }
+
+    .ticket__name {
+        word-break: break-all;
+    }
+
+    hr {
+        display: block;
+    }
+}

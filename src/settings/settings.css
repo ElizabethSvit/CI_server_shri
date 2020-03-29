@@ -1,0 +1,164 @@
+@import "../fonts/fonts.css";
+
+.form {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px 10%;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.form__title {
+    font-family: "YS Text", serif;
+    font-size: 15px;
+    line-height: 20px;
+    margin: 0;
+}
+
+.form__text {
+    font-family: "YS Text", serif;
+    font-size: 13px;
+    line-height: 18px;
+    color: var(--color-text-additional);
+
+    margin-top: 8px;
+    margin-bottom: 4px;
+}
+
+.form__buttons-block {
+    display: flex;
+    flex-wrap: wrap;
+
+    width: 100%;
+    margin-top: 24px;
+}
+
+.form__button {
+    background: var(--color-save-btn-enabled);
+    border-radius: 4px;
+    border-color: transparent;
+
+    height: 36px;
+    margin-right: 8px;
+
+    text-align: center;
+
+    font-family: "YS Text", serif;
+    font-size: 13px;
+    line-height: 34px;
+}
+
+.form__button_save {
+    width: 69px;
+}
+
+.form__button_save:hover {
+    background: var(--color-save-btn-hovered);
+}
+
+.form__button_save:disabled {
+    background: var(--color-save-btn-disabled);
+}
+
+.form__button:focus {
+    border: 2px solid var(--color-form-btn-border);
+    box-sizing: border-box;
+    border-radius: 4px;
+}
+
+.form__button_cancel {
+    background: var(--color-cancel-btn-enabled);
+    width: 80px;
+}
+
+.form__button_cancel:hover {
+    background: var(--color-cancel-btn-hovered);
+}
+
+.form__button_cancel:disabled {
+    background: var(--color-cancel-btn-disabled);
+}
+
+.text-input {
+    font-family: "YS Text", serif;
+    font-size: 13px;
+    line-height: 18px;
+    font-weight: lighter;
+    width: 100%;
+}
+
+.text-input__title_required:after {
+    content:" *";
+    color: var(--color-reject);
+}
+
+.text-input__title {
+    margin: 18px 0 6px 0;
+}
+
+.text-input__text-box::placeholder {
+    opacity: var(--opacity-input-placeholder-text);
+}
+
+.sync-info {
+    margin-top: 20px;
+
+    display: flex;
+    align-items: center;
+    letter-spacing: 0.06px;
+
+    width: 100%;
+}
+
+.text-input__text-box {
+    border: 2px solid var(--color-text-input-border);
+    box-sizing: border-box;
+    border-radius: 4px;
+
+    height: 36px;
+    width: 100%;
+
+    padding-left: 13px;
+    padding-right: 13px;
+
+    font-size: 13px;
+    line-height: 15px;
+}
+
+.text-input__text-box_non-empty {
+    background: url(../images/clear-icon.svg) no-repeat right 10px center;
+}
+
+.text-input__text-box.focused {
+    border: 2px solid var(--color-text-input-border-focused);
+}
+
+.text-input__text-box_number-input {
+    width: 52px;
+
+    margin: auto 8px;
+    text-align: end;
+}
+
+@media only screen and (max-width: 824px) {
+    .header__settings-btn-text {
+        display: none;
+    }
+
+    .form__button_save {
+        width: 100%;
+        margin: 20px 0 12px 0;
+    }
+
+    .form__button_cancel {
+        width: 100%;
+        margin: 0 0 12px 0;
+    }
+
+    .form {
+        padding: 10px 5%;
+    }
+}
+
