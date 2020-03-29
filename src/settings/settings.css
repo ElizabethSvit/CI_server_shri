@@ -1,16 +1,4 @@
-@font-face {
-    font-family: "YS Text Bold";
-    src: url("//yastatic.net/islands/_/6Roy0LCd05cK4nNCipgzheYcNVU.woff2") format("woff2"), url("//yastatic.net/islands/_/KtHQR1erf3spayoIM4M4ngg0e2E.woff") format("woff");
-    font-weight: 700;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: "YS Text Regular";
-    src: url("//yastatic.net/islands/_/PyVcRbwHetz0gOVWLonWH7Od8zM.woff2") format("woff2"), url("//yastatic.net/islands/_/bIx8jOfCEfR-mECoDUEZywDBuHA.woff") format("woff");
-    font-weight: 400;
-    font-style: normal;
-}
+@import "../fonts/fonts.css";
 
 .form {
     display: flex;
@@ -23,17 +11,17 @@
 }
 
 .form__title {
-    font-family: "YS Text Bold", serif;
+    font-family: "YS Text", serif;
     font-size: 15px;
     line-height: 20px;
     margin: 0;
 }
 
 .form__text {
-    font-family: "YS Text Regular", serif;
+    font-family: "YS Text", serif;
     font-size: 13px;
     line-height: 18px;
-    color: #7F8285;
+    color: var(--color-text-additional);
 
     margin-top: 8px;
     margin-bottom: 4px;
@@ -48,7 +36,7 @@
 }
 
 .form__button {
-    background: #FFCC00;
+    background: var(--color-save-btn-enabled);
     border-radius: 4px;
     border-color: transparent;
 
@@ -57,7 +45,7 @@
 
     text-align: center;
 
-    font-family: "YS Text Regular", serif;
+    font-family: "YS Text", serif;
     font-size: 13px;
     line-height: 34px;
 }
@@ -67,34 +55,34 @@
 }
 
 .form__button_save:hover {
-    background: #F2C200;
+    background: var(--color-save-btn-hovered);
 }
 
 .form__button_save:disabled {
-    background: #F2F2F2;
+    background: var(--color-save-btn-disabled);
 }
 
 .form__button:focus {
-    border: 2px solid #B38F00;
+    border: 2px solid var(--color-form-btn-border);
     box-sizing: border-box;
     border-radius: 4px;
 }
 
 .form__button_cancel {
-    background: #E6E6E6;
+    background: var(--color-cancel-btn-enabled);
     width: 80px;
 }
 
 .form__button_cancel:hover {
-    background: #DBDBDB;
+    background: var(--color-cancel-btn-hovered);
 }
 
 .form__button_cancel:disabled {
-    background: #F2F2F2;
+    background: var(--color-cancel-btn-disabled);
 }
 
 .text-input {
-    font-family: "YS Text Regular", serif;
+    font-family: "YS Text", serif;
     font-size: 13px;
     line-height: 18px;
     font-weight: lighter;
@@ -103,7 +91,7 @@
 
 .text-input__title_required:after {
     content:" *";
-    color: #FF3333;
+    color: var(--color-reject);
 }
 
 .text-input__title {
@@ -111,7 +99,7 @@
 }
 
 .text-input__text-box::placeholder {
-    opacity: 0.2;
+    opacity: var(--opacity-input-placeholder-text);
 }
 
 .sync-info {
@@ -125,7 +113,7 @@
 }
 
 .text-input__text-box {
-    border: 2px solid #D9D9D9;
+    border: 2px solid var(--color-text-input-border);
     box-sizing: border-box;
     border-radius: 4px;
 
@@ -144,7 +132,7 @@
 }
 
 .text-input__text-box.focused {
-    border: 2px solid #B3B3B3;
+    border: 2px solid var(--color-text-input-border-focused);
 }
 
 .text-input__text-box_number-input {

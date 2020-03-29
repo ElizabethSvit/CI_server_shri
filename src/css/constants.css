@@ -1,0 +1,37 @@
+:root {
+    --color-save-btn-enabled: #FFCC00;
+    --color-save-btn-hovered: #F2C200;
+    --color-save-btn-focused: #FFCC00;
+    --color-save-btn-disabled: #F2F2F2;
+
+    --color-cancel-btn-enabled: #E6E6E6;
+    --color-cancel-btn-hovered: #DBDBDB;
+    --color-cancel-btn-focused: #E6E6E6;
+    --color-cancel-btn-disabled: #F2F2F2;
+
+    --color-text-input-border: #D9D9D9;
+    --color-text-input-border-focused: #B3B3B3;
+    --color-form-btn-border: #B38F00;
+
+    --color-background: #F0F2F3;
+
+    --color-text-primary: #000000;
+    --color-text-additional: #7F8285;
+    --color-text-disabled: #7F7F7F;
+    --color-text-info-small: #434445;
+
+    --color-accept: #00B341;
+    --color-await: #FF9A00;
+    --color-reject: #FF3333;
+
+    --color-footer-btn-hovered: #E00000;
+
+    --box-shadow: rgba(67, 68, 69, 0.3);
+
+    --opacity-input-placeholder-text: 0.2;
+    --opacity-info-text: 0.3;
+    --opacity-ticket-time-icon: 0.35;
+    --opacity-time-info: 0.5;
+    --opacity-info-text-index: 0.65;
+    --opacity-full: 1;
+}

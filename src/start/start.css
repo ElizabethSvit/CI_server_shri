@@ -1,10 +1,4 @@
-@font-face {
-    font-family: "YS Text";
-    src: url("//yastatic.net/islands/_/6Roy0LCd05cK4nNCipgzheYcNVU.woff2") format("woff2"), url("//yastatic.net/islands/_/KtHQR1erf3spayoIM4M4ngg0e2E.woff") format("woff");
-    font-weight: normal;
-    font-style: normal;
-    font-size: 13px;
-}
+@import "../fonts/fonts.css";
 
 .placeholder {
     display: flex;
@@ -29,7 +23,7 @@
 }
 
 .placeholder__btn {
-    background: #FFCC00;
+    background: var(--color-save-btn-enabled);
     border-radius: 4px;
     border: none;
     width: 123px;

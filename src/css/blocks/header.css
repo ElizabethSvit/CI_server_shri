@@ -1,0 +1,63 @@
+@import "../constants.css";
+@import "../../fonts/fonts.css";
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 10%;
+    height: 28px;
+    margin-top: 10px;
+}
+
+.button {
+    display: flex;
+    flex-direction: row;
+    padding: 0;
+    border: none;
+    border-radius: 4px;
+    background-color: var(--color-cancel-btn-focused);
+}
+
+.header__settings-icon {
+    margin: 8px;
+}
+
+.header__title {
+    font-family: "YS Text", serif;
+    color: #7F8285;
+    align-self: center;
+    font-size: 24px;
+    line-height: 28px;
+    font-weight: normal;
+    margin: 0;
+}
+
+.header__settings-btn-text {
+    margin: 0px 13px 0px 0px;
+    align-self: center;
+    font-family: "YS Text", serif;
+    font-size: 13px;
+    line-height: 28px;
+}
+
+@media only screen and (max-width: 824px) {
+    .header__settings-text {
+        font-size: 18px;
+        line-height: 22px;
+    }
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+        padding: 15px 5%;
+    }
+
+    .header__settings-btn-text {
+        display: none;
+    }
+
+    .header__title {
+        font-size: 18px;
+        line-height: 22px;
+    }
+}
