@@ -82,5 +82,6 @@ hr {
     .big-log {
         margin: 6px 0 16px 0;
         width: 100%;
+        border-radius: 0;
     }
 }

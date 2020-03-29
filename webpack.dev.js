@@ -10,7 +10,7 @@ module.exports = {
         start: './src/start/start.js',
         settings: './src/settings/settings.js'
     },
-    
+
     devServer: {
         port: 8080,
         writeToDisk: false
@@ -89,9 +89,6 @@ module.exports = {
         new MediaQueryPlugin({
             include: [
                 'start',
-                'settings',
-                'details',
-                'history'
             ],
             queries: {
                 'only screen and (max-width: 824px)': 'mobile'
