@@ -1,28 +1,21 @@
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackInlineSVGPlugin = require('html-webpack-inline-svg-plugin');
+const MediaQueryPlugin = require('media-query-plugin');
 
 module.exports = {
-
-    // // This option controls if and how source maps are generated.
-    // // https://webpack.js.org/configuration/devtool/
-    // devtool: 'eval-cheap-module-source-map',
-
-    // https://webpack.js.org/concepts/entry-points/#multi-page-application
     entry: {
         details: './src/details/details.js',
         history: './src/history/history.js',
         start: './src/start/start.js',
         settings: './src/settings/settings.js'
     },
-
-    // https://webpack.js.org/configuration/dev-server/
+    
     devServer: {
         port: 8080,
-        writeToDisk: false // https://webpack.js.org/configuration/dev-server/#devserverwritetodisk-
+        writeToDisk: false
     },
 
-    // https://webpack.js.org/concepts/loaders/
     module: {
         rules: [
             {
@@ -37,18 +30,16 @@ module.exports = {
                 test: /\.css$/i,
                 use: [
                     'style-loader',
-                    'css-loader'
-                    // Please note we are not running postcss here
+                    'css-loader',
+                    MediaQueryPlugin.loader,
                 ]
             },
             {
-                // Load all images as base64 encoding if they are smaller than 8192 bytes
                 test: /\.(png|jpe?g|gif|svg)$/i,
                 use: [
                     {
                         loader: 'url-loader',
                         options: {
-                            // On development we want to see where the file is coming from, hence we preserve the [path]
                             name: '[path][name].[ext]?hash=[hash:20]',
                             esModule: false,
                             limit: 8192
@@ -69,7 +60,6 @@ module.exports = {
         ]
     },
 
-    // https://webpack.js.org/concepts/plugins/
     plugins: [
         new HtmlWebpackPlugin({
             template: './src/details/details.html',
@@ -96,5 +86,16 @@ module.exports = {
             filename: 'settings.html'
         }),
         new HtmlWebpackInlineSVGPlugin(),
+        new MediaQueryPlugin({
+            include: [
+                'start',
+                'settings',
+                'details',
+                'history'
+            ],
+            queries: {
+                'only screen and (max-width: 824px)': 'mobile'
+            }
+        })
     ]
 };
