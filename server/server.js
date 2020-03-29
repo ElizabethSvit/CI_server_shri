@@ -53,7 +53,7 @@ const api = axios.create({
 });
 
 // получение сохраненных настроек
-app.get('/settings', (req, res) => {
+app.get('api/settings', (req, res) => {
         try {
             api.get('/conf', {}).then(({data}) => {
                 const {repoName, buildCommand, mainBranch, period} = data;
@@ -68,7 +68,7 @@ app.get('/settings', (req, res) => {
 );
 
 //  cохранение настроек
-app.post('/settings', (req, res) => {
+app.post('api/settings', (req, res) => {
     const conf = req.body;
 
     try {
@@ -91,7 +91,7 @@ app.post('/settings', (req, res) => {
 });
 
 // получение списка сборок
-app.get('/builds', (req, res) => {
+app.get('api/builds', (req, res) => {
     try {
         api.get('/build/list', {params: {offset: 0, limit: 50}}).then(({data}) => console.log(data));
         res.end('Success');
@@ -99,10 +99,11 @@ app.get('/builds', (req, res) => {
         console.log(e);
         res.end('Error');
     }
+    return {hey: 'hey'};
 });
 
 // добавление сборки в очередь
-app.post('/builds', (req, res) => {
+app.post('api/builds', (req, res) => {
     const commitHash = req.body.commitHash;
 
     try {
@@ -136,7 +137,7 @@ app.post('/builds', (req, res) => {
 });
 
 // получение информации о конкретной сборке
-app.get('/builds', (req, res) => {
+app.get('api/builds', (req, res) => {
     const buildId = req.body.buildId;
     try {
         api.get('/build/details', {params: {buildId}}).then(({data}) => console.log(data));
@@ -148,7 +149,7 @@ app.get('/builds', (req, res) => {
 });
 
 // получение логов билда
-app.get('/builds/logs', (req, res) => {
+app.get('api/builds/logs', (req, res) => {
     const buildId = req.body.buildId;
     try {
         api.get('/build/logs', {params: {buildId}}).then(({data}) => console.log(data));
