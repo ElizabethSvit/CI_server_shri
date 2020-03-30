@@ -2,9 +2,18 @@ const express = require('express');
 const axios = require('axios');
 const https = require('https');
 const {spawn, exec} = require('child_process');
+const bodyParser = require('body-parser');
+
+const port = process.env.PORT || 5000;
 
 const app = express();
 app.use(express.json());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.get('/api/hello', (req, res) => {
+    res.send({ express: 'Hello From Express' });
+});
 
 const DEFAULT_REPO_DIR = './testRepo';
 
@@ -68,7 +77,7 @@ app.get('api/settings', (req, res) => {
 );
 
 //  cохранение настроек
-app.post('api/settings', (req, res) => {
+app.post('/api/settings', (req, res) => {
     const conf = req.body;
 
     try {
@@ -76,22 +85,22 @@ app.post('api/settings', (req, res) => {
             spawn('git', ['clone', conf.repoName, DEFAULT_REPO_DIR]).stdout.on('data', data => {
                 console.log('Repo cloned')
             });
-            res.end('Success');
+            res.send('Successfully cloned the repo');
         } catch (e) {
             console.log(e);
-            res.end('Error');
+            res.send('Error');
         }
 
         api.post('/conf', conf).then(({data}) => console.log(data));
-        res.end('Success');
+        res.send('Successfully updated config');
     } catch (e) {
         console.log(e);
-        res.end('Error');
+        res.send('Error');
     }
 });
 
 // получение списка сборок
-app.get('api/builds', (req, res) => {
+app.get('/api/builds', (req, res) => {
     try {
         api.get('/build/list', {params: {offset: 0, limit: 50}}).then(({data}) => console.log(data));
         res.end('Success');
@@ -99,11 +108,10 @@ app.get('api/builds', (req, res) => {
         console.log(e);
         res.end('Error');
     }
-    return {hey: 'hey'};
 });
 
 // добавление сборки в очередь
-app.post('api/builds', (req, res) => {
+app.post('/api/builds', (req, res) => {
     const commitHash = req.body.commitHash;
 
     try {
@@ -129,15 +137,15 @@ app.post('api/builds', (req, res) => {
             .catch(() => {
         });
 
-        res.end('Success');
+        res.send('Success');
     } catch (e) {
         console.log(e);
-        res.end('Error');
+        res.send('Error');
     }
 });
 
 // получение информации о конкретной сборке
-app.get('api/builds', (req, res) => {
+app.get('/api/builds', (req, res) => {
     const buildId = req.body.buildId;
     try {
         api.get('/build/details', {params: {buildId}}).then(({data}) => console.log(data));
@@ -149,7 +157,7 @@ app.get('api/builds', (req, res) => {
 });
 
 // получение логов билда
-app.get('api/builds/logs', (req, res) => {
+app.get('/api/builds/logs', (req, res) => {
     const buildId = req.body.buildId;
     try {
         api.get('/build/logs', {params: {buildId}}).then(({data}) => console.log(data));
@@ -160,7 +168,7 @@ app.get('api/builds/logs', (req, res) => {
     }
 });
 
-app.listen(3000);
+app.listen(port, () => console.log(`Listening on port ${port}`));
 
 /*
 Testing with curl

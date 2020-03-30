@@ -1,6 +1,7 @@
 import React from 'react';
+import { withRouter } from "react-router";
 
-export default class SettingsForm extends React.Component {
+class SettingsForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -26,7 +27,7 @@ export default class SettingsForm extends React.Component {
     }
 
     callApi = async () => {
-        const response = await fetch('/api/settings');
+        const response = await fetch('/api/hello');
         console.log(response);
 
         const body = await response.json();
@@ -43,6 +44,8 @@ export default class SettingsForm extends React.Component {
             },
             body: JSON.stringify({ 'repoName': this.state.repoName }),
         });
+
+        this.props.history.push('/history');
     };
 
     handleChangeRepo(event) {
@@ -63,7 +66,7 @@ export default class SettingsForm extends React.Component {
 
     render() {
         return (
-            <form className="form">
+            <form className="form" onSubmit={this.handleSubmit}>
                 <h3 className="form__title">Settings</h3>
                 <p className="form__text">Configure repository connection and synchronization settings.</p>
 
@@ -98,3 +101,5 @@ export default class SettingsForm extends React.Component {
         );
     }
 }
+
+export default withRouter(SettingsForm);
