@@ -5,6 +5,9 @@ import '../css/blocks/global.css';
 import '../css/history.css';
 import '../css/blocks/footer.css';
 
+import runIcon from "../images/run-icon.svg";
+import settingsIcon from "../images/settings-icon.svg";
+
 export default class History extends React.Component {
     constructor(props) {
         super(props);
@@ -17,6 +20,7 @@ export default class History extends React.Component {
         this.handleCancelNewBuild = this.handleCancelNewBuild.bind(this);
         this.handleUpdateCommitHash = this.handleUpdateCommitHash.bind(this);
         this.handleSubmitNewBuild = this.handleSubmitNewBuild.bind(this);
+        this.handleGoToSettings = this.handleGoToSettings.bind(this);
     }
 
     handleRunBuild = () => {
@@ -46,6 +50,10 @@ export default class History extends React.Component {
         this.props.history.push(`/build/${buildId}`);
     };
 
+    handleGoToSettings = () => {
+        this.props.history.push(`/settings`);
+    };
+
     render() {
         return (
             <div>
@@ -56,7 +64,8 @@ export default class History extends React.Component {
                             <p className="form__text">Enter the commit hash which you want to build.</p>
 
                             <div className="text-input">
-                                <input required placeholder="Commit hash" type="text" className="text-input__text-box"
+                                <input required placeholder="Commit hash" type="text"
+                                       className="text-input__text-box text-input__text-box_non-empty"
                                        value={this.state.commitHash} onChange={this.handleUpdateCommitHash}/>
                             </div>
                             <div className="form__buttons-block">
@@ -70,11 +79,11 @@ export default class History extends React.Component {
                     <p className="header__title">philip1967/my-awesome-repo</p>
                     <div className="header__build-buttons-block">
                         <button className="button" onClick={this.handleRunBuild }>
-                            <img src="../../ci-client/src/images/run-icon.svg" className="header__settings-icon"/>
+                            <img src={runIcon} className="header__settings-icon"/>
                                 <p className="header__build-btn-text">Run build</p>
                         </button>
-                        <button className="button">
-                            <img src="../../ci-client/src/images/settings-icon.svg" className="header__settings-icon"/>
+                        <button className="button" onClick={this.handleGoToSettings }>
+                            <img src={settingsIcon} className="header__settings-icon"/>
                         </button>
                     </div>
                 </div>
@@ -110,9 +119,9 @@ export default class History extends React.Component {
                     {/*    </div>*/}
                     {/*</div>*/}
 
-                    <button className="button header__build-btn-text show-more-button">
-                        Show more
-                    </button>
+                    {/*<button className="button header__build-btn-text show-more-button">*/}
+                    {/*    Show more*/}
+                    {/*</button>*/}
 
                 </div>
                 <div className="footer">

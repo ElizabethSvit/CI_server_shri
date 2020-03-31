@@ -9,6 +9,9 @@ import {
     Link
 } from "react-router-dom";
 
+import rebuildIcon from "../images/rebuild-icon.svg";
+import settingsIcon from "../images/settings-icon.svg";
+
 class Details extends React.Component {
     render() {
         return (
@@ -17,11 +20,11 @@ class Details extends React.Component {
                     <p className="header__title">philip1967/my-awesome-repo</p>
                     <div className="header__build-buttons-block">
                         <button className="button">
-                            <img src="../images/rebuild-icon.svg" className="header__settings-icon"/>
+                            <img src={rebuildIcon} className="header__settings-icon"/>
                                 <p className="header__build-btn-text">Rebuild</p>
                         </button>
                         <button className="button">
-                            <img src="../images/settings-icon.svg" className="header__settings-icon"/>
+                            <img src={settingsIcon} className="header__settings-icon"/>
                         </button>
                     </div>
                 </div>

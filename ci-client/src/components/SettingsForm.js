@@ -1,5 +1,6 @@
 import React from 'react';
 import { withRouter } from "react-router";
+import MaskedInput from 'react-text-mask';
 
 class SettingsForm extends React.Component {
     constructor(props) {
@@ -42,7 +43,12 @@ class SettingsForm extends React.Component {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ 'repoName': this.state.repoName }),
+            body: JSON.stringify({
+                'repoName': this.state.repoName,
+                'buildCommand': this.state.buildCommand,
+                'mainBranch': this.state.branchName,
+                'period': this.state.minutesSync,
+            }),
         });
 
         this.props.history.push('/history');
@@ -72,7 +78,8 @@ class SettingsForm extends React.Component {
 
                 <div className="text-input">
                     <p className="text-input__title text-input__title_required">GitHub repository</p>
-                    <input required placeholder="user-name/repo-name" type="text" className="text-input__text-box"
+                    <input required placeholder="user-name/repo-name" type="text"
+                           className="text-input__text-box text-input__text-box_non-empty"
                            value={this.state.repoName} onChange={this.handleChangeRepo}/>
                 </div>
                 <div className="text-input">
@@ -84,13 +91,19 @@ class SettingsForm extends React.Component {
                 <div className="text-input">
                     <p className="text-input__title">Main branch</p>
                     <input type="text"
-                           className="text-input__text-box text-input__text-box_non-empty focus"
+                           className="text-input__text-box text-input__text-box_non-empty"
                            value={this.state.branchName} onChange={this.handleChangeBranchName}/>
                 </div>
                 <div className="text-input sync-info">Synchronize every
-                    <input value="10" type="text"
-                           className="text-input__text-box text-input__text-box_number-input"
-                           value={this.state.minutesSync} onChange={this.handleChangeMinutesSync}/>
+                    <MaskedInput
+                        mask={[/[0-9]/, /[0-9]/, /[0-9]/]}
+                        className="text-input__text-box text-input__text-box_number-input"
+                        placeholder=""
+                        value={this.state.minutesSync}
+                        guide={false}
+                        onBlur={() => {}}
+                        onChange={this.handleChangeMinutesSync}
+                    />
                     minutes
                 </div>
                 <div className="form__buttons-block">
