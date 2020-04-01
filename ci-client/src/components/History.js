@@ -8,12 +8,16 @@ import '../css/blocks/footer.css';
 import runIcon from "../images/run-icon.svg";
 import settingsIcon from "../images/settings-icon.svg";
 
-export default class History extends React.Component {
+import Ticket from './Ticket';
+import {withRouter} from "react-router";
+
+class History extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             newBuild: false,
-            commitHash: ''
+            commitHash: '2e2e218201c5ef56f5a60909db02504a06060494',
+            buildsList: [],
         };
 
         this.handleRunBuild = this.handleRunBuild.bind(this);
@@ -21,6 +25,14 @@ export default class History extends React.Component {
         this.handleUpdateCommitHash = this.handleUpdateCommitHash.bind(this);
         this.handleSubmitNewBuild = this.handleSubmitNewBuild.bind(this);
         this.handleGoToSettings = this.handleGoToSettings.bind(this);
+    }
+
+    componentDidMount() {
+        fetch('/api/builds')
+            .then(res => res.json())
+            .then(res => {
+            this.setState({buildsList: res})
+        });
     }
 
     handleRunBuild = () => {
@@ -46,8 +58,7 @@ export default class History extends React.Component {
         });
         console.log('response to new build', response);
 
-        const buildId = 1;
-        this.props.history.push(`/build/${buildId}`);
+        this.props.history.push(`/build/${response.buildId}`);
     };
 
     handleGoToSettings = () => {
@@ -76,7 +87,9 @@ export default class History extends React.Component {
                     </div>
                 </div>}
                 <div className="header">
-                    <p className="header__title">philip1967/my-awesome-repo</p>
+                    <p className="header__title">repo-name
+                        {/*{this.props.location.state.repoName}*/}
+                    </p>
                     <div className="header__build-buttons-block">
                         <button className="button" onClick={this.handleRunBuild }>
                             <img src={runIcon} className="header__settings-icon"/>
@@ -88,36 +101,17 @@ export default class History extends React.Component {
                     </div>
                 </div>
                 <div className="placeholder">
-                    {/*<div className="ticket">*/}
-                    {/*    <div className="ticket__content">*/}
-                    {/*        <div>*/}
-                    {/*            <div className="ticket__title ticket__title_accepted">*/}
-                    {/*                <p className="ticket__number ticket__number_accepted">#1368</p>*/}
-                    {/*                <p className="ticket__name">add documentation for postgres scaler</p>*/}
-                    {/*            </div>*/}
-                    {/*            <ul className="ticket__details">*/}
-                    {/*                <ul className="ticket__details ticket__details_branch">*/}
-                    {/*                    <li className="ticket__info-text ticket__info-text-master">master</li>*/}
-                    {/*                    <li className="ticket__info-text ticket__info-text_index">9c9f0b9</li>*/}
-                    {/*                </ul>*/}
-                    {/*                <li className="ticket__info-text ticket__info-text-username">Philip Kirkorov</li>*/}
-                    {/*            </ul>*/}
-                    {/*        </div>*/}
-                    {/*        <hr />*/}
-                    {/*            <div className="ticket__time-details">*/}
-                    {/*                <div className="ticket__time-info ticket__time-info_calendar">*/}
-                    {/*                    <img src="../../ci-client/src/images/calendar-icon.svg"*/}
-                    {/*                         className="ticket__time-icon"/>*/}
-                    {/*                        21 янв, 03:06*/}
-                    {/*                </div>*/}
-                    {/*                <div className="ticket__time-info">*/}
-                    {/*                    <img src="../../ci-client/src/images/timer-icon.svg"*/}
-                    {/*                         className="ticket__time-icon"/>*/}
-                    {/*                        1 ч 20 мин*/}
-                    {/*                </div>*/}
-                    {/*            </div>*/}
-                    {/*    </div>*/}
-                    {/*</div>*/}
+                    {this.state.buildsList.map(build =>
+                        <Ticket
+                            ticketName={build.commitMessage}
+                            buildNumber={build.buildNumber}
+                            commitHash={build.commitHash}
+                            authorName={build.authorName}
+                            branchName={build.branchName.split('->')[1]}
+                            startTime={build.start}
+                            status={build.status}
+                        />
+                    )}
 
                     {/*<button className="button header__build-btn-text show-more-button">*/}
                     {/*    Show more*/}
@@ -137,3 +131,5 @@ export default class History extends React.Component {
         );
     }
 }
+
+export default  withRouter(History);

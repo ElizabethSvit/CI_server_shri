@@ -51,7 +51,10 @@ class SettingsForm extends React.Component {
             }),
         });
 
-        this.props.history.push('/history');
+        this.props.history.push({
+            pathname: '/history',
+            state: { repoName: this.state.repoName }
+        });
     };
 
     handleChangeRepo(event) {

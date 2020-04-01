@@ -5,14 +5,24 @@ import '../css/blocks/global.css';
 import '../css/details.css';
 import '../css/blocks/footer.css';
 
-import {
-    Link
-} from "react-router-dom";
-
 import rebuildIcon from "../images/rebuild-icon.svg";
 import settingsIcon from "../images/settings-icon.svg";
+import Ticket from "./Ticket";
 
 class Details extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            buildsList: [],
+            // newBuild: false,
+            // commitHash: '2e2e218201c5ef56f5a60909db02504a06060494'
+        };
+    }
+
+    handleGoToSettings = () => {
+        this.props.history.push(`/settings`);
+    };
+
     render() {
         return (
             <div>
@@ -29,32 +39,15 @@ class Details extends React.Component {
                     </div>
                 </div>
                 <div className="placeholder">
-                    <div className="ticket">
-                        <div className="ticket__content">
-                            <div className="ticket__content_placeholder">
-                                <div className="ticket__title ticket__title_accepted">
-                                    <p className="ticket__number ticket__number_accepted">#1368</p>
-                                    <p className="ticket__name">add documentation for postgres scaler</p>
-                                </div>
-                                <ul className="ticket__details">
-                                    <ul className="ticket__details ticket__details_branch">
-                                        <li className="ticket__info-text ticket__info-text-master">master</li>
-                                        <li className="ticket__info-text ticket__info-text_index">b4636ab</li>
-                                    </ul>
-                                    <li className="ticket__info-text ticket__info-text-username">Philip Kirkorov</li>
-                                </ul>
-                                <hr/>
-                                    <div className="ticket__time-details">
-                                        <div className="ticket__time-info ticket__time-info_calendar">
-                                            21 янв, 03:06
-                                        </div>
-                                        <div className="ticket__time-info ticket__time-info_timer">
-                                            1 ч 20 мин
-                                        </div>
-                                    </div>
-                            </div>
-                        </div>
-                    </div>
+                    <Ticket
+                        ticketName={this.props.location.state.commitMessage}
+                        buildNumber={this.props.location.state.buildNumber}
+                        commitHash={this.props.location.state.commitHash}
+                        authorName={this.props.location.state.authorName}
+                        branchName={this.props.location.state.branchName}
+                        startTime={this.props.location.state.start}
+                        status={this.props.location.state.status}
+                    />
                     <div className="big-log">
                         <code className="big-log__text">
                             logs here

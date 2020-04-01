@@ -39,11 +39,6 @@
     opacity: var(--opacity-info-text);
 }
 
-.ticket__time-info_calendar:before {
-    left: -20px;
-    background: url("../images/calendar-icon.svg") no-repeat center center;
-}
-
 .ticket__time-info_timer:before {
     left: -18px;
     background: url("../images/timer-icon.svg") no-repeat center center;

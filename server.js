@@ -40,13 +40,12 @@ class Build {
 
 const parseCommitData = (data, commitHash) => {
     data = data.toString().split('\t');
-    let request = {};
-    request.authorName = data[0];
-    request.commitMessage = data[1];
-    request.branchName = data[2].split(',')[0];
-    request.commitHash = commitHash;
-
-    return request;
+    return {
+        "commitMessage": data[1],
+        "commitHash": commitHash,
+        "branchName": data[2].split(',')[0],
+        "authorName": data[0]
+    }
 };
 
 const token = '***';
@@ -67,11 +66,12 @@ app.get('api/settings', (req, res) => {
             api.get('/conf', {}).then(({data}) => {
                 const {repoName, buildCommand, mainBranch, period} = data;
                 settings = {repoName, buildCommand, mainBranch, period};
+
+                res.send('Success');
             });
-            res.end('Success');
         } catch (e) {
             console.log(e);
-            res.end('Error');
+            res.send('Error');
         }
     },
 );
@@ -83,64 +83,65 @@ app.post('/api/settings', (req, res) => {
     try {
         try {
             spawn('git', ['clone', conf.repoName, DEFAULT_REPO_DIR]).stdout.on('data', data => {
-                console.log('Repo cloned')
+                console.log('Repo cloned');
+                res.send('Success');
             });
-            res.send('Successfully cloned the repo');
         } catch (e) {
             console.log(e);
             res.send('Error');
         }
 
-        api.post('/conf', conf).then(({data}) => console.log(data));
-        res.send('Successfully updated config');
+        api.post('/conf', conf).then(({data}) => {
+            res.send('Successfully updated config');
+        });
     } catch (e) {
         console.log(e);
         res.send('Error');
     }
+    res.end();
 });
 
 // получение списка сборок
 app.get('/api/builds', (req, res) => {
-    try {
-        api.get('/build/list', {params: {offset: 0, limit: 50}}).then(({data}) => console.log(data));
-        res.end('Success');
-    } catch (e) {
-        console.log(e);
+    api.get('/build/list', {params: {offset: 0, limit: 5}}).then(({data}) => {
+        return res.send(data.data);
+    }).catch(() => {
         res.end('Error');
-    }
+    });
 });
 
 // добавление сборки в очередь
 app.post('/api/builds', (req, res) => {
     const commitHash = req.body.commitHash;
 
+    // 2e2e218201c5ef56f5a60909db02504a06060494 commit for testing
     try {
-        exec('git -C testRepo/ log -1 --pretty=format:"%an\t%s\t%D" 5292cdf7407b9e25f3d72da83c9cd275a237b0a0\n',
-            function (error, stdout, stderr) {
-                const commitData = parseCommitData(stdout, commitHash);
-                console.log('Got commit data by hash', commitData);
-                // эта очередь будет с логикой в дз по инфраструктуре
-                buildsQueue.push(commitData);
-            }
-        );
-
-        // предположительно, здесь приходит buildId для последующей отправки на сборку
-        api.post('/build/request', buildsQueue.shift())
-            .then(buildId => {
-                api.post('/build/start', buildId);
-                return buildId;
-            }).then(buildId => {
-                setTimeout(() => {
-                    api.post('/build/finish', buildId)
-                }, 3000);
-            })
-            .catch(() => {
-        });
-
-        res.send('Success');
+        exec(`git -C testRepo/ log -1 --pretty=format:"%an\t%s\t%D" ${commitHash}\n`,
+                function (error, stdout, stderr) {
+                    const commitData = parseCommitData(stdout, commitHash);
+                    console.log('Got commit data by hash', commitData);
+                    let buildId = '';
+                    // предположительно, здесь приходит buildId для последующей отправки на сборку
+                    api.post('/build/request', commitData)
+                        .then(response => {
+                            buildId = response.data.data.id;
+                            api.post('/build/start', {
+                                "buildId": buildId,
+                                "dateTime": "2020-03-30T20:38:17.317Z"
+                            }).then(() => {
+                                res.send(buildId);
+                            });
+                    }).catch(() => {
+                        res.redirect('/error');
+                    });
+                    // эта очередь будет с логикой в дз по инфраструктуре
+                    // buildsQueue.push(commitData);
+                }
+            )
+        res.end();
     } catch (e) {
         console.log(e);
-        res.send('Error');
+        res.redirect('/error');
     }
 });
 
@@ -149,10 +150,10 @@ app.get('/api/builds', (req, res) => {
     const buildId = req.body.buildId;
     try {
         api.get('/build/details', {params: {buildId}}).then(({data}) => console.log(data));
-        res.end('Success');
+        // res.end('Success');
     } catch (e) {
         console.log(e);
-        res.end('Error');
+        // res.end('Error');
     }
 });
 
