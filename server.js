@@ -48,7 +48,7 @@ const parseCommitData = (data, commitHash) => {
     }
 };
 
-const token = '***';
+const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6Ijk0MzczNzYiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiRWxpemFiZXRoU3ZpdCIsInVybjpnaXRodWI6bmFtZSI6IkxpemEgU3ZpdGFua28iLCJ1cm46Z2l0aHViOnVybCI6Imh0dHBzOi8vYXBpLmdpdGh1Yi5jb20vdXNlcnMvRWxpemFiZXRoU3ZpdCIsIm5iZiI6MTU4NTU5NjM1MCwiZXhwIjoxNTg4MTg4MzUwLCJpc3MiOiJTaHJpLUhvbWV3b3JrIiwiYXVkIjoiU2hyaS1Ib21ld29yayJ9.hVqHWfZ7V-Vr1XqYXvsAW0ZkNuLcJMVWeJS6GVUNy8E';
 const api = axios.create({
     baseURL: 'https://hw.shri.yandex/api/',
     timeout: 1000,
