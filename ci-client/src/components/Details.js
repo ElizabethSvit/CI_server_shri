@@ -15,8 +15,7 @@ class Details extends React.Component {
         super(props);
         this.state = {
             buildsList: [],
-            // newBuild: false,
-            // commitHash: '2e2e218201c5ef56f5a60909db02504a06060494'
+            logs: '',
         };
     }
 
@@ -39,6 +38,7 @@ class Details extends React.Component {
                         </button>
                     </div>
                 </div>
+                {/*TODO: отображение пока работает только с перехода из history*/}
                 <div className="placeholder">
                     <Ticket
                         ticketName={this.props.location.state.commitMessage}

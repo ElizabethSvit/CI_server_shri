@@ -117,43 +117,55 @@ app.get('/api/builds', (req, res) => {
 // добавление сборки в очередь
 app.post('/api/builds', (req, res) => {
     const commitHash = req.body.commitHash;
+    let result = {};
+    let commitData = '';
 
     // 2e2e218201c5ef56f5a60909db02504a06060494 commit for testing
-    try {
-        exec(`git -C testRepo/ log -1 --pretty=format:"%an\t%s\t%D" ${commitHash}\n`,
-                function (error, stdout, stderr) {
-                    const commitData = parseCommitData(stdout, commitHash);
-                    console.log('Got commit data by hash', commitData);
-                    let buildId = '';
-                    // предположительно, здесь приходит buildId для последующей отправки на сборку
-                    api.post('/build/request', commitData)
-                        .then(response => {
-                            buildId = response.data.data.id;
-                            api.post('/build/start', {
-                                "buildId": buildId,
-                                "dateTime": "2020-03-30T20:38:17.317Z"
-                            }).then(() => {
-                                res.send(buildId);
-                            });
-                    }).catch(() => {
-                        res.redirect('/error');
-                    });
-                    // эта очередь будет с логикой в дз по инфраструктуре
-                    // buildsQueue.push(commitData);
-                }
-            )
-        res.end();
-    } catch (e) {
-        console.log(e);
-        res.redirect('/error');
-    }
+    // try {
+    exec(`git -C testRepo/ log -1 --pretty=format:"%an\t%s\t%D" ${commitHash}\n`,
+        async function (error, stdout, stderr) {
+            const commitData = parseCommitData(stdout, commitHash);
+            console.log('Got commit data by hash', commitData);
+
+            let buildId = '';
+            let buildNumber = 0;
+
+            await api.post('/build/request', commitData)
+                .then(response => {
+                    buildId = response.data.data.id;
+                    buildNumber = response.data.data.buildNumber;
+
+                    api.post('/build/start', {
+                        "buildId": buildId,
+                        "dateTime": new Date().toISOString(),
+                    }).then(() => {
+                            setTimeout(() => {
+                                api.post('/build/finish', {
+                                    "buildId": buildId,
+                                    "duration": 3,
+                                    "success": true,
+                                    "buildLog": "log"
+                                })
+                            }, 3000);
+                        }
+                    );
+                });
+
+            result = {"buildNumber": buildNumber};
+            res.send({result});
+            // эта очередь будет с логикой в дз по инфраструктуре
+            // buildsQueue.push(commitData);
+        });
 });
 
 // получение информации о конкретной сборке
-app.get('/api/builds', (req, res) => {
+app.get('/api/build/details', (req, res) => {
     const buildId = req.body.buildId;
     try {
-        api.get('/build/details', {params: {buildId}}).then(({data}) => console.log(data));
+        api.get('/build/details', {params: {buildId}}).then(({data}) => {
+            console.log(data);
+            res.send(data);
+        });
         // res.end('Success');
     } catch (e) {
         console.log(e);
@@ -161,15 +173,18 @@ app.get('/api/builds', (req, res) => {
     }
 });
 
-// получение логов билда
-app.get('/api/builds/logs', (req, res) => {
-    const buildId = req.body.buildId;
+// получение логов билда (?)
+app.get('/api/build/log/:buildId', (req, res) => {
+    const buildId = req.params.buildId;
+    console.log(req);
     try {
-        api.get('/build/logs', {params: {buildId}}).then(({data}) => console.log(data));
-        res.end('Success');
+        api.get('/build/log', {params: {buildId}}).then(({data}) => {
+            console.log(data);
+            res.send(data);
+        });
     } catch (e) {
         console.log(e);
-        res.end('Error');
+        // res.end('Error');
     }
 });
 

@@ -48,17 +48,17 @@ class History extends React.Component {
     };
 
     handleSubmitNewBuild = async e => {
-        e.preventDefault();
-        const response = await fetch('/api/builds', {
+        fetch('/api/builds', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({'commitHash': this.state.commitHash}),
+        }).then(res => {
+            return res.json();
+        }).then((res) => {
+            this.props.history.push(`/build/${res.buildNumber}`);
         });
-        console.log('response to new build', response);
-
-        this.props.history.push(`/build/${response.buildId}`);
     };
 
     handleGoToSettings = () => {
