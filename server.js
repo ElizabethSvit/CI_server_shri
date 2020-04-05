@@ -3,6 +3,9 @@ const axios = require('axios');
 const https = require('https');
 const {spawn, exec} = require('child_process');
 const bodyParser = require('body-parser');
+require('dotenv').config();
+
+const fs = require('fs');
 
 const port = process.env.PORT || 5000;
 
@@ -48,7 +51,7 @@ const parseCommitData = (data, commitHash) => {
     }
 };
 
-const token = '***';
+const token = process.env.REACT_APP_API_KEY;
 const api = axios.create({
     baseURL: 'https://hw.shri.yandex/api/',
     timeout: 1000,
@@ -61,13 +64,12 @@ const api = axios.create({
 });
 
 // получение сохраненных настроек
-app.get('api/settings', (req, res) => {
+app.get('/api/settings', (req, res) => {
         try {
             api.get('/conf', {}).then(({data}) => {
-                const {repoName, buildCommand, mainBranch, period} = data;
-                settings = {repoName, buildCommand, mainBranch, period};
-
-                res.send('Success');
+                // const {repoName, buildCommand, mainBranch, period} = data;
+                // settings = {repoName, buildCommand, mainBranch, period};
+                res.send({data});
             });
         } catch (e) {
             console.log(e);
@@ -77,28 +79,30 @@ app.get('api/settings', (req, res) => {
 );
 
 //  cохранение настроек
-app.post('/api/settings', (req, res) => {
-    const conf = req.body;
+app.post('/api/settings', async (req, res) => {
+    let conf = req.body;
 
-    try {
+    if (!fs.existsSync(DEFAULT_REPO_DIR)) {
+        console.log('repo does not exist');
         try {
             spawn('git', ['clone', conf.repoName, DEFAULT_REPO_DIR]).stdout.on('data', data => {
                 console.log('Repo cloned');
-                res.send('Success');
             });
         } catch (e) {
-            console.log(e);
-            res.send('Error');
+            res.send(e);
         }
-
-        api.post('/conf', conf).then(({data}) => {
-            res.send('Successfully updated config');
-        });
-    } catch (e) {
-        console.log(e);
-        res.send('Error');
     }
-    res.end();
+
+    let result = {};
+    try {
+        await api.post('/conf', conf);
+        // TODO: парсить реальные статусы ответа сервера
+        result = {status: 200};
+    } catch (e) {
+        result = {status: 400};
+    } finally {
+        res.send({result});
+    }
 });
 
 // получение списка сборок

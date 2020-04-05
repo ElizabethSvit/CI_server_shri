@@ -12,6 +12,7 @@ class SettingsForm extends React.Component {
             minutesSync: '10',
 
             response: '',
+            isLoading: false,
         };
 
         this.handleChangeRepo = this.handleChangeRepo.bind(this);
@@ -21,24 +22,10 @@ class SettingsForm extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    componentDidMount() {
-        this.callApi()
-            .then(res => this.setState({ response: res }))
-            .catch(err => console.log(err));
-    }
-
-    callApi = async () => {
-        const response = await fetch('/api/hello');
-        console.log(response);
-
-        const body = await response.json();
-        if (response.status !== 200) throw Error(body.message);
-        return body;
-    };
-
-    handleSubmit = async e => {
+    handleSubmit = e => {
+        this.setState({isLoading: true});
         e.preventDefault();
-        const response = await fetch('/api/settings', {
+        fetch('/api/settings', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -47,13 +34,20 @@ class SettingsForm extends React.Component {
                 'repoName': this.state.repoName,
                 'buildCommand': this.state.buildCommand,
                 'mainBranch': this.state.branchName,
-                'period': this.state.minutesSync,
+                'period': parseInt(this.state.minutesSync),
             }),
-        });
-
-        this.props.history.push({
-            pathname: '/history',
-            state: { repoName: this.state.repoName }
+        }).then(res => {
+            return res.json();
+        }).then((res) => {
+            if (res.result.status === 200) {
+                this.props.history.push({
+                    pathname: '/history',
+                    state: {repoName: this.state.repoName}
+                });
+            } else {
+                alert('Ошибка сохранения настроек');
+            }
+            this.setState({isLoading: false});
         });
     };
 
@@ -110,7 +104,7 @@ class SettingsForm extends React.Component {
                     minutes
                 </div>
                 <div className="form__buttons-block">
-                    <button className="form__button form__button_save" type="submit">Save</button>
+                    <button className="form__button form__button_save" type="submit" disabled={this.state.isLoading}>Save</button>
                     <button className="form__button form__button_cancel">Cancel</button>
                 </div>
             </form>

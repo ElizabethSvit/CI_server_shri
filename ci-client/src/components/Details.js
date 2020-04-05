@@ -8,6 +8,7 @@ import '../css/blocks/footer.css';
 import rebuildIcon from "../images/rebuild-icon.svg";
 import settingsIcon from "../images/settings-icon.svg";
 import Ticket from "./Ticket";
+import { withRouter } from "react-router";
 
 class Details extends React.Component {
     constructor(props) {
@@ -69,4 +70,4 @@ class Details extends React.Component {
     }
 }
 
-export default Details;
+export default withRouter(Details);

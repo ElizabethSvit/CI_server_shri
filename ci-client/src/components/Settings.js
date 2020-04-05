@@ -7,7 +7,7 @@ import '../css/blocks/footer.css';
 
 import SettingsForm from "./SettingsForm";
 
-class Start extends React.Component {
+class Settings extends React.Component {
     render() {
         return (
             <div>
@@ -29,4 +29,4 @@ class Start extends React.Component {
     }
 }
 
-export default Start;
+export default Settings;
