@@ -1,6 +1,6 @@
 @import "../fonts/fonts.css";
 
-.placeholder {
+.start-page-layout {
     display: flex;
     flex: 1;
     flex-direction: column;

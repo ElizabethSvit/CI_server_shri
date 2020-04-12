@@ -4,6 +4,7 @@
 .placeholder {
     display: flex;
     flex: 1;
+    align-items: center;
     flex-direction: column;
     justify-content: flex-start;
     padding: 10px 10%;
@@ -52,15 +53,15 @@
     left: -30px;
 }
 
-.ticket__title_accepted:before {
+.ticket__title_Success:before {
     background: url("../../images/accepted-icon.svg") no-repeat center 1px;
 }
 
-.ticket__title_await:before {
+.ticket__title_InProgress:before {
     background: url("../../images/await-icon.svg") no-repeat center 1px;
 }
 
-.ticket__title_rejected:before {
+.ticket__title_Fail:before {
     background: url("../../images/rejected-icon.svg") no-repeat center 1px;
 }
 
@@ -71,15 +72,15 @@
     line-height: 20px;
 }
 
-.ticket__number_accepted {
+.ticket__number_Success {
     color: var(--color-accept);
 }
 
-.ticket__number_await {
+.ticket__number_InProgress {
     color: var(--color-await);
 }
 
-.ticket__number_rejected {
+.ticket__number_Fail {
     color: var(--color-reject);
 }
 
@@ -201,15 +202,15 @@ hr {
         left: -23px;
     }
 
-    .ticket__title_accepted:before {
+    .ticket__title_Success:before {
         background: url("../../images/accepted-icon-small.svg") no-repeat center 1px;
     }
 
-    .ticket__title_await:before {
+    .ticket__title_InProgress:before {
         background: url("../../images/await-icon-small.svg") no-repeat center 1px;
     }
 
-    .ticket__title_rejected:before {
+    .ticket__title_Fail:before {
         background: url("../../images/rejected-icon-small.svg") no-repeat center 1px;
     }
 
