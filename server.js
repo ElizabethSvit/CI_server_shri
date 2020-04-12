@@ -63,6 +63,11 @@ const api = axios.create({
     }),
 });
 
+// test
+app.get('/', function (req, res) {
+    res.send('Hello World')
+});
+
 // получение сохраненных настроек
 app.get('/api/settings', (req, res) => {
         try {
