@@ -187,6 +187,7 @@ app.get('/api/build/log/:buildId', (req, res) => {
 app.listen(port, () => console.log(`Listening on port ${port}`));
 
 module.exports = app;
+
 /*
 Testing with curl
 
