@@ -14,10 +14,6 @@ app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get('/api/hello', (req, res) => {
-    res.send({ express: 'Hello From Express' });
-});
-
 const DEFAULT_REPO_DIR = './testRepo';
 
 let settings = {
@@ -159,7 +155,7 @@ app.post('/api/builds', (req, res) => {
 });
 
 // получение информации о конкретной сборке
-app.get('/api/build/details', (req, res) => {
+app.get('/api/build/details/:buildId', (req, res) => {
     const buildId = req.body.buildId;
     try {
         api.get('/build/details', {params: {buildId}}).then(({data}) => {
@@ -189,6 +185,8 @@ app.get('/api/build/log/:buildId', (req, res) => {
 });
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
+
+module.exports = app;
 
 /*
 Testing with curl
