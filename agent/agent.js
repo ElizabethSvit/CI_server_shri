@@ -21,7 +21,7 @@ const api = axios.create({
 });
 
 api.post('/notify-agent', {
-    "host": "https://localhost",
+    "host": "http://localhost",
     "port": config.port,
 }).then(response => {
     console.log(response.status);
