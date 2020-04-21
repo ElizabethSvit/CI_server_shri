@@ -14,7 +14,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 let buildsQueue = [];
 let agents = [];
 
-const token = process.env.REACT_APP_API_KEY;
 const api = axios.create({
     baseURL: config.apiBaseURL,
     timeout: 1000,
