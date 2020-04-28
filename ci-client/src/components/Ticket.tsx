@@ -4,9 +4,25 @@ import Moment from 'react-moment';
 import calendarIcon from "../images/calendar-icon.svg";
 import timerIcon from "../images/timer-icon.svg";
 
-import {withRouter} from "react-router";
+import {RouteComponentProps, withRouter} from "react-router-dom";
+import {TicketConfig} from "../types/commonTypes";
 
-class Ticket extends React.Component {
+type PropsType = RouteComponentProps & {
+    history: Array<{pathname: string, state: TicketConfig}>,
+    location: {
+        state: any;
+    },
+    // TODO: вынести это в родительскую компоненту
+    ticketName: string,
+    buildNumber: number,
+    commitHash: string,
+    authorName: string,
+    branchName: string,
+    startTime: string,
+    status: string,
+}
+
+class Ticket extends React.Component<PropsType> {
     goToDetails = () => {
         this.props.history.push({
             pathname: `/build/${this.props.buildNumber}`,

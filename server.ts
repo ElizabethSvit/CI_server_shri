@@ -137,7 +137,7 @@ app.post('/api/builds', (req: Body, res) => {
 });
 
 // получение информации о конкретной сборке
-app.get('/api/build/details/:buildId', (req, res) => {
+app.get('/api/build/details/:buildId', (req: Body, res) => {
     const buildId = req.body.buildId;
     try {
         api.get('/build/details', {params: {buildId}}).then(({data}) => {
@@ -152,7 +152,7 @@ app.get('/api/build/details/:buildId', (req, res) => {
 });
 
 // получение логов билда (?)
-app.get('/api/build/log/:buildId', (req, res) => {
+app.get('/api/build/log/:buildId', (req: Body, res) => {
     const buildId = req.params.buildId;
     console.log(req);
     try {

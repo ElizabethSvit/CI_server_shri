@@ -8,10 +8,23 @@ import '../css/blocks/footer.css';
 import rebuildIcon from "../images/rebuild-icon.svg";
 import settingsIcon from "../images/settings-icon.svg";
 import Ticket from "./Ticket";
-import { withRouter } from "react-router";
+import { RouteComponentProps, withRouter } from "react-router-dom";
+import {Build} from "../types/commonTypes";
 
-class Details extends React.Component {
-    constructor(props) {
+type StateType = {
+    buildsList: Array<Build>,
+    logs: '',
+}
+
+type PropsType = RouteComponentProps & {
+    history: Array<string>,
+    location: {
+        state: any;
+    },
+}
+
+class Details extends React.Component<PropsType, StateType> {
+    constructor(props: PropsType) {
         super(props);
         this.state = {
             buildsList: [],
