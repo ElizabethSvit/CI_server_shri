@@ -16,28 +16,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 const DEFAULT_REPO_DIR = './testRepo';
 
-let settings = {
-    repoName: "",
-    buildCommand: "",
-    mainBranch: "",
-    period: 0,
-};
-
-// эта очередь будет с логикой в дз по инфраструктуре
-const buildsQueue = [];
-
-class Build {
-    constructor(buildNumber, commitMessage, commitHash, authorName, start, duration) {
-        this.buildNumber = buildNumber;
-        this.commitMessage = commitMessage;
-        this.commitHash = commitHash;
-        this.authorName = authorName;
-        this.start = start;
-        this.duration = duration;
-    }
+interface ConfigData {
+    repoName: string,
+    buildCommand: string,
+    mainBranch: string,
+    period: string,
 }
 
-const parseCommitData = (data, commitHash) => {
+const parseCommitData = (data: Array<string>, commitHash: string) => {
     data = data.toString().split('\t');
     return {
         "commitMessage": data[1],
@@ -60,11 +46,9 @@ const api = axios.create({
 });
 
 // получение сохраненных настроек
-app.get('/api/settings', (req, res) => {
+app.get('/api/settings', (req: RequestInfo, res) => {
         try {
-            api.get('/conf', {}).then(({data}) => {
-                // const {repoName, buildCommand, mainBranch, period} = data;
-                // settings = {repoName, buildCommand, mainBranch, period};
+            api.get('/conf', {}).then((data: ConfigData) => {
                 res.send({data});
             });
         } catch (e) {
@@ -75,13 +59,13 @@ app.get('/api/settings', (req, res) => {
 );
 
 //  cохранение настроек
-app.post('/api/settings', async (req, res) => {
+app.post('/api/settings', async (req: Body, res) => {
     let conf = req.body;
 
     if (!fs.existsSync(DEFAULT_REPO_DIR)) {
         console.log('repo does not exist');
         try {
-            spawn('git', ['clone', conf.repoName, DEFAULT_REPO_DIR]).stdout.on('data', data => {
+            spawn('git', ['clone', conf.repoName, DEFAULT_REPO_DIR]).stdout.on('data', () => {
                 console.log('Repo cloned');
             });
         } catch (e) {
@@ -102,7 +86,7 @@ app.post('/api/settings', async (req, res) => {
 });
 
 // получение списка сборок
-app.get('/api/builds', (req, res) => {
+app.get('/api/builds', (req: Body, res) => {
     api.get('/build/list', {params: {offset: 0, limit: 5}}).then(({data}) => {
         return res.send(data.data);
     }).catch(() => {
@@ -111,7 +95,7 @@ app.get('/api/builds', (req, res) => {
 });
 
 // добавление сборки в очередь
-app.post('/api/builds', (req, res) => {
+app.post('/api/builds', (req: Body, res) => {
     const commitHash = req.body.commitHash;
     let result = {};
     let commitData = '';
@@ -127,7 +111,7 @@ app.post('/api/builds', (req, res) => {
             let buildNumber = 0;
 
             await api.post('/build/request', commitData)
-                .then(response => {
+                .then((response: Body) => {
                     buildId = response.data.data.id;
                     buildNumber = response.data.data.buildNumber;
 
@@ -149,13 +133,11 @@ app.post('/api/builds', (req, res) => {
 
             result = {"buildNumber": buildNumber};
             res.send({result});
-            // эта очередь будет с логикой в дз по инфраструктуре
-            // buildsQueue.push(commitData);
         });
 });
 
 // получение информации о конкретной сборке
-app.get('/api/build/details/:buildId', (req, res) => {
+app.get('/api/build/details/:buildId', (req: Body, res) => {
     const buildId = req.body.buildId;
     try {
         api.get('/build/details', {params: {buildId}}).then(({data}) => {
@@ -170,7 +152,7 @@ app.get('/api/build/details/:buildId', (req, res) => {
 });
 
 // получение логов билда (?)
-app.get('/api/build/log/:buildId', (req, res) => {
+app.get('/api/build/log/:buildId', (req: Body, res) => {
     const buildId = req.params.buildId;
     console.log(req);
     try {

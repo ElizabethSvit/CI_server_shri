@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {SyntheticEvent} from 'react';
 import '../css/blocks/build_header.css';
 import '../css/blocks/ticket.css';
 import '../css/blocks/global.css';
@@ -9,10 +9,24 @@ import runIcon from "../images/run-icon.svg";
 import settingsIcon from "../images/settings-icon.svg";
 
 import Ticket from './Ticket';
-import {withRouter} from "react-router";
+import { RouteComponentProps, withRouter } from "react-router-dom";
+import {Build} from "../types/commonTypes";
 
-class History extends React.Component {
-    constructor(props) {
+type StateType = {
+    newBuild: boolean,
+    commitHash: string,
+    buildsList: Array<Build>,
+}
+
+type PropsType = RouteComponentProps & {
+    history: Array<string>,
+    location: {
+        state: any;
+    },
+}
+
+class History extends React.Component<PropsType, StateType> {
+    constructor(props: PropsType) {
         super(props);
         this.state = {
             newBuild: false,
@@ -43,11 +57,11 @@ class History extends React.Component {
         this.setState({newBuild: false});
     };
 
-    handleUpdateCommitHash = event => {
-        this.setState({commitHash: event.target.value});
+    handleUpdateCommitHash = (event: SyntheticEvent) => {
+        this.setState({commitHash: (event.target as HTMLInputElement).value});
     };
 
-    handleSubmitNewBuild = async e => {
+    handleSubmitNewBuild = async () => {
         fetch('/api/builds', {
             method: 'POST',
             headers: {
@@ -132,4 +146,4 @@ class History extends React.Component {
     }
 }
 
-export default  withRouter(History);
+export default withRouter(History);

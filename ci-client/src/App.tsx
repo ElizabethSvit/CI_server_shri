@@ -5,14 +5,12 @@ import {
     BrowserRouter as Router,
     Switch,
     Route,
-    Link
 } from "react-router-dom";
 
 import Start from "./components/Start";
 import Settings from "./components/Settings";
 import History from "./components/History";
 import Details from "./components/Details";
-import SettingsForm from "./components/SettingsForm";
 
 export default function App() {
     const [mainRoute, updateRoute] = useState(null);
@@ -43,5 +41,3 @@ export default function App() {
         </Router>
     );
 }
-
-// export default App;

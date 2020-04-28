@@ -1,9 +1,31 @@
-import React from 'react';
-import { withRouter } from "react-router";
+import React, {SyntheticEvent} from 'react';
+import { RouteComponentProps, withRouter } from "react-router-dom";
 import MaskedInput from 'react-text-mask';
 
-class SettingsForm extends React.Component {
-    constructor(props) {
+type HistoryConfig = {
+    pathname: string,
+    state: {repoName: string}
+}
+
+type StateType = {
+    repoName: string,
+    buildCommand: string,
+    branchName: string,
+    minutesSync: string,
+
+    response: string,
+    isLoading: boolean,
+}
+
+type PropsType = RouteComponentProps & {
+    history: Array<HistoryConfig>,
+    location: {
+        state: any;
+    },
+}
+
+class SettingsForm extends React.Component<PropsType, StateType> {
+    constructor(props: PropsType) {
         super(props);
         this.state = {
             repoName: '',
@@ -22,7 +44,7 @@ class SettingsForm extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    handleSubmit = e => {
+    handleSubmit = (e: SyntheticEvent) => {
         this.setState({isLoading: true});
         e.preventDefault();
         fetch('/api/settings', {
@@ -51,20 +73,20 @@ class SettingsForm extends React.Component {
         });
     };
 
-    handleChangeRepo(event) {
-        this.setState({repoName: event.target.value});
+    handleChangeRepo(event: SyntheticEvent) {
+        this.setState({repoName: (event.target as HTMLInputElement).value});
     }
 
-    handleChangeBuildCmd(event) {
-        this.setState({buildCommand: event.target.value});
+    handleChangeBuildCmd(event: SyntheticEvent) {
+        this.setState({buildCommand: (event.target as HTMLInputElement).value});
     }
 
-    handleChangeBranchName(event) {
-        this.setState({branchName: event.target.value});
+    handleChangeBranchName(event: SyntheticEvent) {
+        this.setState({branchName: (event.target as HTMLInputElement).value});
     }
 
-    handleChangeMinutesSync(event) {
-        this.setState({minutesSync: event.target.value});
+    handleChangeMinutesSync(event: SyntheticEvent) {
+        this.setState({minutesSync: (event.target as HTMLInputElement).value});
     }
 
     render() {
