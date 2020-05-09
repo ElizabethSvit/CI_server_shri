@@ -6,7 +6,7 @@ let chaiHttp = require('chai-http');
 let should = chai.should();
 let assert = require('assert');
 
-let server = require('../server.js');
+let server = require('../node-server.js');
 
 // var sinon = require('sinon');
 // var PassThrough = require('stream').PassThrough;
