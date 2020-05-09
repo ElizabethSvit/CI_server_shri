@@ -5,6 +5,25 @@ const {spawn, exec} = require('child_process');
 const bodyParser = require('body-parser');
 require('dotenv').config();
 
+let mcache = require('memory-cache');
+
+let cache = (duration) => {
+    return (req, res, next) => {
+        let key = '__express__' + req.originalUrl || req.url;
+        let cachedBody = mcache.get(key);
+        if (cachedBody) {
+            res.send(cachedBody);
+        } else {
+            res.sendResponse = res.send;
+            res.send = (body) => {
+                mcache.put(key, body, duration * 1000);
+                res.sendResponse(body)
+            };
+            next();
+        }
+    }
+};
+
 const fs = require('fs');
 
 const port = process.env.PORT || 5000;
@@ -15,27 +34,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 const DEFAULT_REPO_DIR = './testRepo';
-
-let settings = {
-    repoName: "",
-    buildCommand: "",
-    mainBranch: "",
-    period: 0,
-};
-
-// эта очередь будет с логикой в дз по инфраструктуре
-const buildsQueue = [];
-
-class Build {
-    constructor(buildNumber, commitMessage, commitHash, authorName, start, duration) {
-        this.buildNumber = buildNumber;
-        this.commitMessage = commitMessage;
-        this.commitHash = commitHash;
-        this.authorName = authorName;
-        this.start = start;
-        this.duration = duration;
-    }
-}
 
 const parseCommitData = (data, commitHash) => {
     data = data.toString().split('\t');
@@ -59,12 +57,10 @@ const api = axios.create({
     }),
 });
 
-// получение сохраненных настроек
-app.get('/api/settings', (req, res) => {
+// получение сохраненных настроек (с кэшом)
+app.get('/api/settings', cache(10), (req, res) => {
         try {
             api.get('/conf', {}).then(({data}) => {
-                // const {repoName, buildCommand, mainBranch, period} = data;
-                // settings = {repoName, buildCommand, mainBranch, period};
                 res.send({data});
             });
         } catch (e) {
@@ -102,7 +98,7 @@ app.post('/api/settings', async (req, res) => {
 });
 
 // получение списка сборок
-app.get('/api/builds', (req, res) => {
+app.get('/api/builds', cache(10), (req, res) => {
     api.get('/build/list', {params: {offset: 0, limit: 5}}).then(({data}) => {
         return res.send(data.data);
     }).catch(() => {
@@ -155,7 +151,7 @@ app.post('/api/builds', (req, res) => {
 });
 
 // получение информации о конкретной сборке
-app.get('/api/build/details/:buildId', (req, res) => {
+app.get('/api/build/details/:buildId', cache(10), (req, res) => {
     const buildId = req.body.buildId;
     try {
         api.get('/build/details', {params: {buildId}}).then(({data}) => {
@@ -170,7 +166,7 @@ app.get('/api/build/details/:buildId', (req, res) => {
 });
 
 // получение логов билда (?)
-app.get('/api/build/log/:buildId', (req, res) => {
+app.get('/api/build/log/:buildId', cache(10), (req, res) => {
     const buildId = req.params.buildId;
     console.log(req);
     try {
