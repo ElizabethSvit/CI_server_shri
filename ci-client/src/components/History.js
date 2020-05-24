@@ -11,6 +11,9 @@ import settingsIcon from "../images/settings-icon.svg";
 import Ticket from './Ticket';
 import {withRouter} from "react-router";
 
+let { i18n, setLang } = require('../i18n.js');
+let keys = require('../App.keys.json');
+
 class History extends React.Component {
     constructor(props) {
         super(props);
@@ -19,12 +22,6 @@ class History extends React.Component {
             commitHash: '2e2e218201c5ef56f5a60909db02504a06060494',
             buildsList: [],
         };
-
-        this.handleRunBuild = this.handleRunBuild.bind(this);
-        this.handleCancelNewBuild = this.handleCancelNewBuild.bind(this);
-        this.handleUpdateCommitHash = this.handleUpdateCommitHash.bind(this);
-        this.handleSubmitNewBuild = this.handleSubmitNewBuild.bind(this);
-        this.handleGoToSettings = this.handleGoToSettings.bind(this);
     }
 
     componentDidMount() {
@@ -34,6 +31,10 @@ class History extends React.Component {
             this.setState({buildsList: res})
         });
     }
+
+    setLanguage = (lang) => {
+        setLang(lang);
+    };
 
     handleRunBuild = () => {
         this.setState({newBuild: true});
@@ -71,7 +72,7 @@ class History extends React.Component {
                 {this.state.newBuild && <div className="overlay-alert">
                     <div className="overlay-alert-card">
                         <form className="form"  onSubmit={this.handleSubmitNewBuild}>
-                            <h3 className="form__title">New build</h3>
+                            <h3 className="form__title">{this.state.i18nApp('ru', 'New build')}</h3>
                             <p className="form__text">Enter the commit hash which you want to build.</p>
 
                             <div className="text-input">
@@ -123,6 +124,9 @@ class History extends React.Component {
                         <button className="footer__text-btn">Support</button>
                         <button
                             className="footer__text-btn footer__learning-text footer__learning-text_active">Learning
+                        </button>
+                        <button onClick={this.setLanguage('ru')}
+                                className="footer__text-btn footer__learning-text footer__learning-text_active">Русская версия
                         </button>
                     </div>
                     <p className="footer__text-rights">© 2020 Liza Svitanko</p>

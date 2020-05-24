@@ -1,0 +1,14 @@
+{
+  "ru": {
+    "start": {
+      "header__title": "Школьный CI сервер"
+
+    }
+  },
+  "en": {
+    "start": {
+      "header__title": "School CI server"
+
+    }
+  }
+}
