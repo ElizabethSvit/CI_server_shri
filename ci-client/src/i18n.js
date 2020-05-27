@@ -1,33 +1,21 @@
-let _lang = 'ru';
+import i18n from "i18next";
+import { initReactI18next } from "react-i18next";
 
-function setLang(lang) {
-    _lang = lang;
-}
+// the translations
+// (tip move them in a JSON file and import them)
+const resources = require('./locales/ru.json');
 
-function generateText(msg, params) {
-    let res = [], tmp = '';
+i18n
+    .use(initReactI18next) // passes i18n down to react-i18next
+    .init({
+        resources,
+        lng: "en",
 
-    for (const char of msg) {
-        switch (char) {
-            default: tmp += char; break;
-            case '{': {
-                res.push(tmp);
-                tmp = '';
-                break;
-            }
-            case '}': {
-                res.push(params[tmp]);
-                tmp = '';
-                break;
-            }
+        keySeparator: false, // we do not use keys in form messages.welcome
 
+        interpolation: {
+            escapeValue: false // react already safes from xss
         }
-    }
-}
-function i18n(keys) {
-    let keySet = keys[_lang];
+    });
 
-    return (key, params) => generateText(keySet[key], params);
-}
-
-module.exports = {i18n, setLang};
+export default i18n;

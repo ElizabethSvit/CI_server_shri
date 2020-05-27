@@ -10,9 +10,8 @@ import settingsIcon from "../images/settings-icon.svg";
 
 import Ticket from './Ticket';
 import {withRouter} from "react-router";
-
-let { i18n, setLang } = require('../i18n.js');
-let keys = require('../App.keys.json');
+import {Translation} from 'react-i18next';
+import Footer from "./Footer";
 
 class History extends React.Component {
     constructor(props) {
@@ -28,13 +27,9 @@ class History extends React.Component {
         fetch('/api/builds')
             .then(res => res.json())
             .then(res => {
-            this.setState({buildsList: res})
-        });
+                this.setState({buildsList: res})
+            });
     }
-
-    setLanguage = (lang) => {
-        setLang(lang);
-    };
 
     handleRunBuild = () => {
         this.setState({newBuild: true});
@@ -71,9 +66,17 @@ class History extends React.Component {
             <div>
                 {this.state.newBuild && <div className="overlay-alert">
                     <div className="overlay-alert-card">
-                        <form className="form"  onSubmit={this.handleSubmitNewBuild}>
-                            <h3 className="form__title">{this.state.i18nApp('ru', 'New build')}</h3>
-                            <p className="form__text">Enter the commit hash which you want to build.</p>
+                        <form className="form" onSubmit={this.handleSubmitNewBuild}>
+                            <Translation className="form__title">
+                                {
+                                    t => <h1>{t('New build')}</h1>
+                                }
+                            </Translation>
+                            <Translation className="form__text">
+                                {
+                                    t => <h1>{t('Enter the commit hash which you want to build.')}</h1>
+                                }
+                            </Translation>
 
                             <div className="text-input">
                                 <input required placeholder="Commit hash" type="text"
@@ -81,8 +84,21 @@ class History extends React.Component {
                                        value={this.state.commitHash} onChange={this.handleUpdateCommitHash}/>
                             </div>
                             <div className="form__buttons-block">
-                                <button className="form__button form__button_save" type="submit">Build</button>
-                                <button className="form__button form__button_cancel" onClick={this.handleCancelNewBuild}>Cancel</button>
+                                <button className="form__button form__button_save" type="submit">
+                                    <Translation className="form__button form__button_save">
+                                        {
+                                            t => <h1>{t('Build')}</h1>
+                                        }
+                                    </Translation>
+                                </button>
+                                <button className="form__button form__button_cancel"
+                                        onClick={this.handleCancelNewBuild}>
+                                    <Translation className="form__button form__button_cancel">
+                                        {
+                                            t => <h1>{t('Cancel')}</h1>
+                                        }
+                                    </Translation>
+                                </button>
                             </div>
                         </form>
                     </div>
@@ -92,11 +108,15 @@ class History extends React.Component {
                         {/*{this.props.location.state.repoName}*/}
                     </p>
                     <div className="header__build-buttons-block">
-                        <button className="button" onClick={this.handleRunBuild }>
+                        <button className="button" onClick={this.handleRunBuild}>
                             <img src={runIcon} className="header__settings-icon"/>
-                                <p className="header__build-btn-text">Run build</p>
+                            <Translation className="button header__build-btn-text">
+                                {
+                                    t => <h1>{t('Run build')}</h1>
+                                }
+                            </Translation>
                         </button>
-                        <button className="button" onClick={this.handleGoToSettings }>
+                        <button className="button" onClick={this.handleGoToSettings}>
                             <img src={settingsIcon} className="header__settings-icon"/>
                         </button>
                     </div>
@@ -119,21 +139,10 @@ class History extends React.Component {
                     {/*</button>*/}
 
                 </div>
-                <div className="footer">
-                    <div className="footer__btn-block">
-                        <button className="footer__text-btn">Support</button>
-                        <button
-                            className="footer__text-btn footer__learning-text footer__learning-text_active">Learning
-                        </button>
-                        <button onClick={this.setLanguage('ru')}
-                                className="footer__text-btn footer__learning-text footer__learning-text_active">Русская версия
-                        </button>
-                    </div>
-                    <p className="footer__text-rights">© 2020 Liza Svitanko</p>
-                </div>
+                <Footer/>
             </div>
         );
     }
 }
 
-export default  withRouter(History);
+export default withRouter(History);
