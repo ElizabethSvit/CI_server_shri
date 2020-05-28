@@ -1,0 +1,24 @@
+{
+  "ru": {
+    "translation": {
+      "School CI server": "Школьный CI сервер",
+      "Settings": "Настройки",
+      "Configure repository connection and synchronization settings.": "Сконфигурируйте соединение с репозиторием и настройки синхронизации.",
+      "Open settings": "Открыть настройки",
+      "New build": "Новая сборка",
+      "Enter the commit hash which you want to build.": "Введите хэш коммита, который хотите собрать.",
+      "Build": "Собрать",
+      "Cancel": "Отмена",
+      "Run build": "Запустить сборку",
+      "Rebuild": "Пересобрать",
+      "Github repository": "Github репозиторий",
+      "Build command": "Команда для сборки",
+      "Main branch": "Базовая ветка",
+      "Save": "Сохранить",
+      "Support": "Поддержка",
+      "Learning": "Изучение",
+      "Русская версия": "English version",
+      "Liza Svitanko": "Лиза Свитанько"
+    }
+  }
+}

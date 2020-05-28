@@ -6,27 +6,21 @@ import '../css/settings.css';
 import '../css/blocks/footer.css';
 
 import SettingsForm from "./SettingsForm";
+import Footer from "./Footer";
+import {withTranslation} from "react-i18next";
 
-class Settings extends React.Component {
-    render() {
-        return (
-            <div>
-                <div className="header">
-                    <p className="header__title">School CI server</p>
-                </div>
-                <SettingsForm />
-                <div className="footer">
-                    <div className="footer__btn-block">
-                        <button className="footer__text-btn">Support</button>
-                        <button
-                            className="footer__text-btn footer__learning-text footer__learning-text_active">Learning
-                        </button>
-                    </div>
-                    <p className="footer__text-rights">© 2020 Liza Svitanko</p>
-                </div>
+function Settings({ t }){
+    return (
+        <div>
+            <div className="header">
+                <p className="header__title">
+                    {t('School CI server')}
+                </p>
             </div>
-        );
-    }
+            <SettingsForm />
+            <Footer />
+        </div>
+    );
 }
 
-export default Settings;
+export default withTranslation()(Settings);

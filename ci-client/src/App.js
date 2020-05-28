@@ -12,7 +12,6 @@ import Start from "./components/Start";
 import Settings from "./components/Settings";
 import History from "./components/History";
 import Details from "./components/Details";
-import SettingsForm from "./components/SettingsForm";
 
 export default function App() {
     const [mainRoute, updateRoute] = useState(null);
@@ -30,15 +29,10 @@ export default function App() {
                 {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
                 <Switch>
-                    <Route exact path="/">
-                        {mainRoute}
-                    </Route>
-                    <Route path="/settings" component={Settings}>
-                    </Route>
-                    <Route path="/history" component={History}>
-                    </Route>
-                    <Route path="/build/:number" component={Details}>
-                    </Route>
+                    <Route exact path="/">{mainRoute}</Route>
+                    <Route path="/settings" component={Settings} />
+                    <Route path="/history" component={History} />
+                    <Route path="/build/:number" component={Details} />
                 </Switch>
         </Router>
     );

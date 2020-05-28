@@ -1,6 +1,7 @@
 import React from 'react';
 import { withRouter } from "react-router";
 import MaskedInput from 'react-text-mask';
+import {Translation} from "react-i18next";
 
 class SettingsForm extends React.Component {
     constructor(props) {
@@ -70,23 +71,51 @@ class SettingsForm extends React.Component {
     render() {
         return (
             <form className="form" onSubmit={this.handleSubmit}>
-                <h3 className="form__title">Settings</h3>
-                <p className="form__text">Configure repository connection and synchronization settings.</p>
+                <Translation>
+                    {
+                        t => <h3 className="form__title">{t('Settings')}</h3>
+                    }
+                </Translation>
+                <Translation>
+                    {
+                        t => <p className="form__text">
+                            {t('Configure repository connection and synchronization settings.')}
+                        </p>
+                    }
+                </Translation>
 
                 <div className="text-input">
-                    <p className="text-input__title text-input__title_required">GitHub repository</p>
+                    <Translation>
+                        {
+                            t => <p className="text-input__title text-input__title_required">
+                                {t('Github repository')}
+                            </p>
+                        }
+                    </Translation>
                     <input required placeholder="user-name/repo-name" type="text"
                            className="text-input__text-box text-input__text-box_non-empty"
                            value={this.state.repoName} onChange={this.handleChangeRepo}/>
                 </div>
                 <div className="text-input">
-                    <p className="text-input__title">Build command</p>
+                    <Translation>
+                        {
+                            t => <p className="text-input__title">
+                                {t('Build command')}
+                            </p>
+                        }
+                    </Translation>
                     <input required type="text"
                            className="text-input__text-box text-input__text-box_non-empty"
                            value={this.state.buildCommand} onChange={this.handleChangeBuildCmd}/>
                 </div>
                 <div className="text-input">
-                    <p className="text-input__title">Main branch</p>
+                    <Translation>
+                        {
+                            t => <p className="text-input__title">
+                                {t('Main branch')}
+                            </p>
+                        }
+                    </Translation>
                     <input type="text"
                            className="text-input__text-box text-input__text-box_non-empty"
                            value={this.state.branchName} onChange={this.handleChangeBranchName}/>
@@ -104,8 +133,20 @@ class SettingsForm extends React.Component {
                     minutes
                 </div>
                 <div className="form__buttons-block">
-                    <button className="form__button form__button_save" type="submit" disabled={this.state.isLoading}>Save</button>
-                    <button className="form__button form__button_cancel">Cancel</button>
+                    <Translation>
+                        {
+                            t => <button className="form__button form__button_save" type="submit" disabled={this.state.isLoading}>
+                                {t('Save')}
+                            </button>
+                        }
+                    </Translation>
+                    <Translation>
+                        {
+                            t => <button className="form__button form__button_cancel">
+                                {t('Cancel')}
+                            </button>
+                        }
+                    </Translation>
                 </div>
             </form>
         );

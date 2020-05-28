@@ -8,7 +8,9 @@ import '../css/blocks/footer.css';
 import rebuildIcon from "../images/rebuild-icon.svg";
 import settingsIcon from "../images/settings-icon.svg";
 import Ticket from "./Ticket";
-import { withRouter } from "react-router";
+import {withRouter} from "react-router";
+import {Translation} from "react-i18next";
+import Footer from "./Footer";
 
 class Details extends React.Component {
     constructor(props) {
@@ -31,7 +33,11 @@ class Details extends React.Component {
                     <div className="header__build-buttons-block">
                         <button className="button">
                             <img src={rebuildIcon} className="header__settings-icon"/>
-                                <p className="header__build-btn-text">Rebuild</p>
+                            <Translation>
+                                {
+                                    t => <h1 className="header__build-btn-text">{t('Rebuild')}</h1>
+                                }
+                            </Translation>
                         </button>
                         <button className="button">
                             <img src={settingsIcon} className="header__settings-icon"/>
@@ -55,16 +61,7 @@ class Details extends React.Component {
                         </code>
                     </div>
                 </div>
-
-                <div className="footer">
-                    <div className="footer__btn-block">
-                        <button className="footer__text-btn">Support</button>
-                        <button
-                            className="footer__text-btn footer__learning-text footer__learning-text_active">Learning
-                        </button>
-                    </div>
-                    <p className="footer__text-rights">© 2020 Liza Svitanko</p>
-                </div>
+                <Footer/>
             </div>
         );
     }

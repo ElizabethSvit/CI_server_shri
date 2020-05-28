@@ -10,6 +10,7 @@
     "moment": "^2.24.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-intl": "^4.5.11",
     "react-moment": "^0.9.7",
     "react-router": "^5.1.2",
     "react-scripts": "3.4.1",
