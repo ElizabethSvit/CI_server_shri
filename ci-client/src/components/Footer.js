@@ -1,8 +1,10 @@
-import React from 'react';
+import React, {useState} from 'react';
 import i18n from "../i18n";
 import {withTranslation} from "react-i18next";
 
 function Footer({ t, i18n }) {
+    const [lang, setLang] = useState("en");
+
     return (
         <div className="footer">
             <div className="footer__btn-block">
@@ -10,11 +12,20 @@ function Footer({ t, i18n }) {
                 <button
                     className="footer__text-btn footer__learning-text footer__learning-text_active">{t('Learning')}
                 </button>
-                <button onClick={() => {i18n.changeLanguage("ru")}}
-                        className="footer__text-btn footer__learning-text footer__learning-text_active">Русская версия
+                <button onClick={() => {
+                    if (lang === "en") {
+                        i18n.changeLanguage("ru");
+                        setLang("ru");
+                    } else {
+                        i18n.changeLanguage("en");
+                        setLang("en");
+                    }
+                }}
+                        className="footer__text-btn footer__learning-text footer__learning-text_active">
+                    {t('Русская версия')}
                 </button>
             </div>
-            <p className="footer__text-rights">© 2020 Liza Svitanko</p>
+            <p className="footer__text-rights">© 2020 {t('Liza Svitanko')}</p>
         </div>
     );
 }

@@ -33,9 +33,9 @@ class Details extends React.Component {
                     <div className="header__build-buttons-block">
                         <button className="button">
                             <img src={rebuildIcon} className="header__settings-icon"/>
-                            <Translation className="header__build-btn-text">
+                            <Translation>
                                 {
-                                    t => <h1>{t('Rebuild')}</h1>
+                                    t => <h1 className="header__build-btn-text">{t('Rebuild')}</h1>
                                 }
                             </Translation>
                         </button>

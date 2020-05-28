@@ -3,7 +3,7 @@
     "translation": {
       "School CI server": "Школьный CI сервер",
       "Settings": "Настройки",
-      "Configure repository connection and synchronization settings": "Конфигурировать соединение с репозиторием и настройки синхронизации",
+      "Configure repository connection and synchronization settings.": "Сконфигурируйте соединение с репозиторием и настройки синхронизации.",
       "Open settings": "Открыть настройки",
       "New build": "Новая сборка",
       "Enter the commit hash which you want to build.": "Введите хэш коммита, который хотите собрать.",
@@ -16,7 +16,9 @@
       "Main branch": "Базовая ветка",
       "Save": "Сохранить",
       "Support": "Поддержка",
-      "Learning": "Изучение"
+      "Learning": "Изучение",
+      "Русская версия": "English version",
+      "Liza Svitanko": "Лиза Свитанько"
     }
   }
 }

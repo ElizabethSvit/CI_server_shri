@@ -67,14 +67,14 @@ class History extends React.Component {
                 {this.state.newBuild && <div className="overlay-alert">
                     <div className="overlay-alert-card">
                         <form className="form" onSubmit={this.handleSubmitNewBuild}>
-                            <Translation className="form__title">
+                            <Translation>
                                 {
-                                    t => <h1>{t('New build')}</h1>
+                                    t => <p className="form__title">{t('New build')}</p>
                                 }
                             </Translation>
-                            <Translation className="form__text">
+                            <Translation>
                                 {
-                                    t => <h1>{t('Enter the commit hash which you want to build.')}</h1>
+                                    t => <p className="form__text">{t('Enter the commit hash which you want to build.')}</p>
                                 }
                             </Translation>
 
@@ -84,21 +84,22 @@ class History extends React.Component {
                                        value={this.state.commitHash} onChange={this.handleUpdateCommitHash}/>
                             </div>
                             <div className="form__buttons-block">
-                                <button className="form__button form__button_save" type="submit">
-                                    <Translation className="form__button form__button_save">
-                                        {
-                                            t => <h1>{t('Build')}</h1>
-                                        }
-                                    </Translation>
-                                </button>
-                                <button className="form__button form__button_cancel"
-                                        onClick={this.handleCancelNewBuild}>
-                                    <Translation className="form__button form__button_cancel">
-                                        {
-                                            t => <h1>{t('Cancel')}</h1>
-                                        }
-                                    </Translation>
-                                </button>
+                                <Translation>
+                                    {
+                                        t =>
+                                            <button className="form__button form__button_save" type="submit">
+                                                {t('Build')}
+                                            </button>
+                                    }
+                                </Translation>
+                                <Translation>
+                                    {
+                                        t =>
+                                            <button className="form__button form__button_cancel" type="submit">
+                                                {t('Cancel')}
+                                            </button>
+                                    }
+                                </Translation>
                             </div>
                         </form>
                     </div>
@@ -110,9 +111,9 @@ class History extends React.Component {
                     <div className="header__build-buttons-block">
                         <button className="button" onClick={this.handleRunBuild}>
                             <img src={runIcon} className="header__settings-icon"/>
-                            <Translation className="button header__build-btn-text">
+                            <Translation>
                                 {
-                                    t => <h1>{t('Run build')}</h1>
+                                    t => <h1 className="button header__build-btn-text">{t('Run build')}</h1>
                                 }
                             </Translation>
                         </button>

@@ -71,53 +71,51 @@ class SettingsForm extends React.Component {
     render() {
         return (
             <form className="form" onSubmit={this.handleSubmit}>
-                <h3 className="form__title">
-                    <Translation>
-                        {
-                            t => <h1>{t('Settings')}</h1>
-                        }
-                    </Translation>
-                </h3>
-                <p className="form__text">
-                    <Translation>
-                        {
-                            t => <h1>{t('Configure repository connection and synchronization settings.')}</h1>
-                        }
-                    </Translation>
-                </p>
+                <Translation>
+                    {
+                        t => <h3 className="form__title">{t('Settings')}</h3>
+                    }
+                </Translation>
+                <Translation>
+                    {
+                        t => <p className="form__text">
+                            {t('Configure repository connection and synchronization settings.')}
+                        </p>
+                    }
+                </Translation>
 
                 <div className="text-input">
-                    <p className="text-input__title text-input__title_required">
-                        <Translation>
-                            {
-                                t => <h1>{t('Github repository')}</h1>
-                            }
-                        </Translation>
-                    </p>
+                    <Translation>
+                        {
+                            t => <p className="text-input__title text-input__title_required">
+                                {t('Github repository')}
+                            </p>
+                        }
+                    </Translation>
                     <input required placeholder="user-name/repo-name" type="text"
                            className="text-input__text-box text-input__text-box_non-empty"
                            value={this.state.repoName} onChange={this.handleChangeRepo}/>
                 </div>
                 <div className="text-input">
-                    <p className="text-input__title">
-                        <Translation>
-                            {
-                                t => <h1>{t('Build command')}</h1>
-                            }
-                        </Translation>
-                    </p>
+                    <Translation>
+                        {
+                            t => <p className="text-input__title">
+                                {t('Build command')}
+                            </p>
+                        }
+                    </Translation>
                     <input required type="text"
                            className="text-input__text-box text-input__text-box_non-empty"
                            value={this.state.buildCommand} onChange={this.handleChangeBuildCmd}/>
                 </div>
                 <div className="text-input">
-                    <p className="text-input__title">
-                        <Translation>
-                            {
-                                t => <h1>{t('Main branch')}</h1>
-                            }
-                        </Translation>
-                    </p>
+                    <Translation>
+                        {
+                            t => <p className="text-input__title">
+                                {t('Main branch')}
+                            </p>
+                        }
+                    </Translation>
                     <input type="text"
                            className="text-input__text-box text-input__text-box_non-empty"
                            value={this.state.branchName} onChange={this.handleChangeBranchName}/>
@@ -135,20 +133,20 @@ class SettingsForm extends React.Component {
                     minutes
                 </div>
                 <div className="form__buttons-block">
-                    <button className="form__button form__button_save" type="submit" disabled={this.state.isLoading}>
-                        <Translation>
-                            {
-                                t => <h1>{t('Save')}</h1>
-                            }
-                        </Translation>
-                    </button>
-                    <button className="form__button form__button_cancel">
-                        <Translation>
-                            {
-                                t => <h1>{t('Cancel')}</h1>
-                            }
-                        </Translation>
-                    </button>
+                    <Translation>
+                        {
+                            t => <button className="form__button form__button_save" type="submit" disabled={this.state.isLoading}>
+                                {t('Save')}
+                            </button>
+                        }
+                    </Translation>
+                    <Translation>
+                        {
+                            t => <button className="form__button form__button_cancel">
+                                {t('Cancel')}
+                            </button>
+                        }
+                    </Translation>
                 </div>
             </form>
         );
